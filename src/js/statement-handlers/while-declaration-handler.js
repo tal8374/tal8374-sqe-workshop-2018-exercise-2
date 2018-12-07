@@ -25,6 +25,12 @@ WhileDeclaration.prototype.handleWhileBody = function () {
     let body = new BodyDeclaration(bodyContent, this, this.lineNumber + 1);
 
     body.init();
+
+    let payloads = body.getPayloads();
+
+    for(let i = 0; i < payloads.length; i++) {
+        this.payloads.push(payloads[i]);
+    }
 };
 
 WhileDeclaration.prototype.handleWhileDeclaration = function () {
