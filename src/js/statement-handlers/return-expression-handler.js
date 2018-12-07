@@ -1,4 +1,3 @@
-import {insertLineHandler} from './common';
 import {Expression} from './expression-handler';
 
 function ReturnExpression(returnExpression, wrapper, lineNumber, type) {
@@ -6,6 +5,7 @@ function ReturnExpression(returnExpression, wrapper, lineNumber, type) {
     this.returnExpression = returnExpression;
     this.lineNumber = lineNumber;
     this.type = type;
+    this.payloads = [];
 }
 
 ReturnExpression.prototype.init = function () {
@@ -19,7 +19,7 @@ ReturnExpression.prototype.init = function () {
 ReturnExpression.prototype.handleExpression = function () {
     let payload = this.getPayload();
 
-    insertLineHandler(payload);
+    this.payloads.push(payload);
 };
 
 ReturnExpression.prototype.getPayload = function () {
@@ -42,6 +42,10 @@ ReturnExpression.prototype.increaseLineNumber = function () {
 
 ReturnExpression.prototype.getLineNumber = function () {
     return this.lineNumber;
+};
+
+ReturnExpression.prototype.getPayloads = function () {
+    return this.payloads;
 };
 
 export {ReturnExpression};

@@ -1,4 +1,3 @@
-import {insertLineHandler} from './common';
 import {BodyDeclaration} from './body-declaration-handler';
 import {Expression} from './expression-handler';
 
@@ -7,6 +6,7 @@ function FunctionDeclaration(body, wrapper, lineNumber, type) {
     this.body = body;
     this.lineNumber = lineNumber;
     this.type = type;
+    this.payloads = [];
 }
 
 FunctionDeclaration.prototype.init = function () {
@@ -25,6 +25,12 @@ FunctionDeclaration.prototype.handleFunctionBody = function () {
     var bodyDeclarationInstance = new BodyDeclaration(this.body.body.body, this, this.lineNumber + 1);
 
     bodyDeclarationInstance.init();
+
+    let playloads = bodyDeclarationInstance.getPayloads();
+
+    for (let i = 0; i < playloads.length; i++) {
+        this.payloads.push(playloads[i]);
+    }
 };
 
 FunctionDeclaration.prototype.handleParamsDeclaration = function () {
@@ -33,7 +39,7 @@ FunctionDeclaration.prototype.handleParamsDeclaration = function () {
     for (let i = 0; i < params.length; i++) {
         var payload = this.getParamData(params[i]);
 
-        insertLineHandler(payload);
+        this.payloads.push(payload);
     }
 };
 
@@ -49,9 +55,9 @@ FunctionDeclaration.prototype.getParamData = function (param) {
 };
 
 FunctionDeclaration.prototype.handleFunctionDeclaration = function () {
-    var payLoad = this.getFunctionData();
+    var payload = this.getFunctionData();
 
-    insertLineHandler(payLoad);
+    this.payloads.push(payload);
 };
 
 FunctionDeclaration.prototype.getFunctionData = function () {
@@ -73,6 +79,10 @@ FunctionDeclaration.prototype.increaseLineNumber = function () {
 
 FunctionDeclaration.prototype.getLineNumber = function () {
     return this.lineNumber;
+};
+
+FunctionDeclaration.prototype.getPayloads = function () {
+    return this.payloads;
 };
 
 export {FunctionDeclaration};

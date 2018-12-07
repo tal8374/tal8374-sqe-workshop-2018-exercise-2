@@ -1,13 +1,12 @@
 import {BodyDeclaration} from './body-declaration-handler';
 import {Expression} from './expression-handler';
 
-import {insertLineHandler} from './common';
-
 function IfExpression(expression, wrapper, lineNumber, type) {
     this.wrapper = wrapper;
     this.expression = expression;
     this.lineNumber = lineNumber;
     this.type = type;
+    this.payloads = [];
 }
 
 IfExpression.prototype.init = function () {
@@ -28,6 +27,12 @@ IfExpression.prototype.handleIfBody = function () {
     let bodyExpression = new BodyDeclaration(body, this, this.lineNumber + 1);
     bodyExpression.init();
 
+    let payloads = bodyExpression.getPayloads();
+
+    for(let i = 0; i < payloads.length; i++) {
+        this.payloads.push(payloads[i]);
+    }
+
     return 'Body statement is handled';
 };
 
@@ -46,6 +51,12 @@ IfExpression.prototype.handleAlternative = function () {
 IfExpression.prototype.handleIfElseStatement = function () {
     var alternative = new IfExpression(this.expression.alternate, this, this.lineNumber + 1, 'else if statement');
     alternative.init();
+
+    let payloads = alternative.getPayloads();
+
+    for(let i = 0; i < payloads.length; i++) {
+        this.payloads.push(payloads[i]);
+    }
 };
 
 IfExpression.prototype.handleElseStatement = function () {
@@ -60,6 +71,12 @@ IfExpression.prototype.handleElseStatement = function () {
         bodyInstance = new BodyDeclaration(this.expression.alternate, this, this.lineNumber + 1);
     }
     bodyInstance.init();
+
+    let payloads = bodyInstance.getPayloads();
+
+    for(let i = 0; i < payloads.length; i++) {
+        this.payloads.push(payloads[i]);
+    }
 };
 
 IfExpression.prototype.declareElseStatement = function () {
@@ -68,13 +85,13 @@ IfExpression.prototype.declareElseStatement = function () {
         type: this.type ? this.type : this.expression.type,
     };
 
-    insertLineHandler(payload);
+    this.payloads.push(payload);
 };
 
 IfExpression.prototype.handleIfDeclaration = function () {
     var payload = this.getPayload();
 
-    insertLineHandler(payload);
+    this.payloads.push(payload);
 
     return 'Done inserting the payload to the table';
 };
@@ -101,6 +118,10 @@ IfExpression.prototype.increaseLineNumber = function () {
 
 IfExpression.prototype.getLineNumber = function () {
     return this.lineNumber;
+};
+
+IfExpression.prototype.getPayloads = function () {
+    return this.payloads;
 };
 
 export {IfExpression};

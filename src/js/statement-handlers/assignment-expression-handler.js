@@ -1,5 +1,3 @@
-import {insertLineHandler} from './common';
-
 import {ValueExpression} from './value-expression-handler';
 
 function AssignmentExpression(body, wrapper, lineNumber, type) {
@@ -7,6 +5,7 @@ function AssignmentExpression(body, wrapper, lineNumber, type) {
     this.expression = body.expression ? body.expression : body;
     this.lineNumber = lineNumber;
     this.type = type;
+    this.payloads = [];
 }
 
 AssignmentExpression.prototype.init = function () {
@@ -38,7 +37,7 @@ AssignmentExpression.prototype.handleUpdateExpression = function () {
         lineNumber: this.lineNumber,
     };
 
-    insertLineHandler(payload);
+    this.payloads.push(payload);
 };
 
 AssignmentExpression.prototype.handleSingleExpression = function () {
@@ -58,7 +57,7 @@ AssignmentExpression.prototype.handleMultipleExpression = function () {
 AssignmentExpression.prototype.assignmentExpressionHandler = function (declaration) {
     let payload = this.parseAssignmentExpressionHandler(declaration);
 
-    insertLineHandler(payload);
+    this.payloads.push(payload);
 };
 
 AssignmentExpression.prototype.parseAssignmentExpressionHandler = function (expression) {
@@ -74,7 +73,7 @@ AssignmentExpression.prototype.parseAssignmentExpressionHandler = function (expr
 };
 
 AssignmentExpression.prototype.getName = function (expression) {
-    if(!expression.left) return '';
+    if (!expression.left) return '';
 
     return expression.left.name ? expression.left.name : expression.left.property.name;
 };
@@ -89,6 +88,10 @@ AssignmentExpression.prototype.increaseLineNumber = function () {
 
 AssignmentExpression.prototype.getLineNumber = function () {
     return this.lineNumber;
+};
+
+AssignmentExpression.prototype.getPayloads = function () {
+    return this.payloads;
 };
 
 export {AssignmentExpression};

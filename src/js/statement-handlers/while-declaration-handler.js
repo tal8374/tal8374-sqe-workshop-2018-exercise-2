@@ -1,6 +1,4 @@
 import {BodyDeclaration} from './body-declaration-handler';
-
-import {insertLineHandler} from './common';
 import {Expression} from './expression-handler';
 
 function WhileDeclaration(expression, wrapper, lineNumber, type) {
@@ -8,6 +6,7 @@ function WhileDeclaration(expression, wrapper, lineNumber, type) {
     this.expression = expression;
     this.lineNumber = lineNumber;
     this.type = type;
+    this.payloads = [];
 }
 
 WhileDeclaration.prototype.init = function () {
@@ -29,9 +28,9 @@ WhileDeclaration.prototype.handleWhileBody = function () {
 };
 
 WhileDeclaration.prototype.handleWhileDeclaration = function () {
-    var payLoad = this.getWhileData();
+    var payload = this.getWhileData();
 
-    insertLineHandler(payLoad);
+    this.payloads.push(payload);
 };
 
 WhileDeclaration.prototype.getWhileData = function () {
@@ -56,6 +55,10 @@ WhileDeclaration.prototype.increaseLineNumber = function () {
 
 WhileDeclaration.prototype.getLineNumber = function () {
     return this.lineNumber;
+};
+
+WhileDeclaration.prototype.getPayloads = function () {
+    return this.payloads;
 };
 
 export {WhileDeclaration};

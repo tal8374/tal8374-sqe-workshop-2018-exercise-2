@@ -1,14 +1,14 @@
-import {insertLineHandler} from './common';
 import {Expression} from './expression-handler';
 
-function ContinueStatementExpression(expression, wrapper, lineNumber, type) {
+function BreakStatementExpression(expression, wrapper, lineNumber, type) {
     this.wrapper = wrapper;
     this.expression = expression;
     this.lineNumber = lineNumber;
     this.type = type;
+    this.payloads = [];
 }
 
-ContinueStatementExpression.prototype.init = function () {
+BreakStatementExpression.prototype.init = function () {
     this.handleBreakStatement();
 
     this.increaseLineNumber();
@@ -16,19 +16,19 @@ ContinueStatementExpression.prototype.init = function () {
     return 'Initialization done';
 };
 
-ContinueStatementExpression.prototype.handleBreakStatement = function () {
+BreakStatementExpression.prototype.handleBreakStatement = function () {
     let name = new Expression(this.expression.label);
 
-    let breakPayload = {
+    let payload = {
         lineNumber: this.lineNumber,
         type: this.type ? this.type : this.expression.type,
         name: name.getExpression(),
     };
 
-    insertLineHandler(breakPayload);
+    this.payloads.push(payload);
 };
 
-ContinueStatementExpression.prototype.increaseLineNumber = function () {
+BreakStatementExpression.prototype.increaseLineNumber = function () {
     this.lineNumber += 1;
 
     if (this.wrapper) {
@@ -36,9 +36,13 @@ ContinueStatementExpression.prototype.increaseLineNumber = function () {
     }
 };
 
-ContinueStatementExpression.prototype.getLineNumber = function () {
+BreakStatementExpression.prototype.getLineNumber = function () {
     return this.lineNumber;
 };
 
+BreakStatementExpression.prototype.getPayloads = function () {
+    return this.payloads;
+};
 
-export {ContinueStatementExpression};
+
+export {BreakStatementExpression};

@@ -13,6 +13,7 @@ function BodyDeclaration(body, wrapper, lineNumber = 1, type) {
     this.lineNumber = lineNumber;
     this.wrapper = wrapper;
     this.type = type;
+    this.payloads = [];
 }
 
 BodyDeclaration.prototype.handlers = {
@@ -47,6 +48,12 @@ BodyDeclaration.prototype.handleDeclaration = function (declaration) {
         let declarationHandler = new this.handlers[declarationType](declaration, this, this.lineNumber, this.type);
 
         declarationHandler.init();
+
+        let payloads = declarationHandler.getPayloads();
+
+        for (let i = 0; i < payloads.length; i++) {
+            this.payloads.push(payloads[i]);
+        }
     }
 };
 
@@ -60,6 +67,10 @@ BodyDeclaration.prototype.increaseLineNumber = function () {
 
 BodyDeclaration.prototype.getLineNumber = function () {
     return this.lineNumber;
+};
+
+BodyDeclaration.prototype.getPayloads = function () {
+    return this.payloads;
 };
 
 export {BodyDeclaration};
