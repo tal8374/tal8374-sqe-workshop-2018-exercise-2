@@ -6,7 +6,7 @@ function WhileDeclaration(expression, wrapper, lineNumber, type) {
     this.expression = expression;
     this.lineNumber = lineNumber;
     this.type = type;
-    this.payloads = [];
+    this.payloads = [{}];
 }
 
 WhileDeclaration.prototype.init = function () {
@@ -28,15 +28,19 @@ WhileDeclaration.prototype.handleWhileBody = function () {
 
     let payloads = body.getPayloads();
 
-    for(let i = 0; i < payloads.length; i++) {
-        this.payloads.push(payloads[i]);
+    this.payloads[0].body = [];
+
+    for (let i = 0; i < payloads.length; i++) {
+        this.payloads[0].body.push(payloads[i]);
     }
 };
 
 WhileDeclaration.prototype.handleWhileDeclaration = function () {
-    var payload = this.getWhileData();
+    let payload = this.getWhileData();
 
-    this.payloads.push(payload);
+    this.payloads[0].declaration = payload;
+
+    this.payloads[0].type = this.type ? this.type : this.expression.type;
 };
 
 WhileDeclaration.prototype.getWhileData = function () {
@@ -45,8 +49,6 @@ WhileDeclaration.prototype.getWhileData = function () {
     return {
         lineNumber: this.lineNumber,
         type: this.type ? this.type : this.expression.type,
-        name: null,
-        value: null,
         condition: expression.getExpression(),
     };
 };

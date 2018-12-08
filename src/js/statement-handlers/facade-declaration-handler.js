@@ -1,11 +1,17 @@
 import {BodyDeclaration} from './body-declaration-handler';
 
-function facadeDeclarationHandler(parsedCode) {
-    var handler = new BodyDeclaration(parsedCode.body, null, 1);
-
-    handler.init();
-
-    return handler.getPayloads();
+function facadeDeclaration(parsedCode) {
+    this.parsedCode = parsedCode;
 }
 
-export {facadeDeclarationHandler};
+facadeDeclaration.prototype.init = function () {
+    this.handler = new BodyDeclaration(this.parsedCode.body, null, 1);
+
+    this.handler.init();
+};
+
+facadeDeclaration.prototype.getPayloads = function () {
+    return this.handler.getPayloads();
+};
+
+export {facadeDeclaration};

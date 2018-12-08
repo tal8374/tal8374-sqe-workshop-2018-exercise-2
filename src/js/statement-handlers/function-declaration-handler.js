@@ -6,7 +6,7 @@ function FunctionDeclaration(body, wrapper, lineNumber, type) {
     this.body = body;
     this.lineNumber = lineNumber;
     this.type = type;
-    this.payloads = [];
+    this.payloads = [{}];
 }
 
 FunctionDeclaration.prototype.init = function () {
@@ -28,18 +28,22 @@ FunctionDeclaration.prototype.handleFunctionBody = function () {
 
     let playloads = bodyDeclarationInstance.getPayloads();
 
+    this.payloads[0].body = [];
+
     for (let i = 0; i < playloads.length; i++) {
-        this.payloads.push(playloads[i]);
+        this.payloads[0].body.push(playloads[i]);
     }
 };
 
 FunctionDeclaration.prototype.handleParamsDeclaration = function () {
     var params = this.body.params;
 
+    this.payloads[0].params = [];
+
     for (let i = 0; i < params.length; i++) {
         var payload = this.getParamData(params[i]);
 
-        this.payloads.push(payload);
+        this.payloads[0].params.push(payload);
     }
 };
 
@@ -57,7 +61,8 @@ FunctionDeclaration.prototype.getParamData = function (param) {
 FunctionDeclaration.prototype.handleFunctionDeclaration = function () {
     var payload = this.getFunctionData();
 
-    this.payloads.push(payload);
+    this.payloads[0].declaration = payload;
+    this.payloads[0].type = this.body.type;
 };
 
 FunctionDeclaration.prototype.getFunctionData = function () {

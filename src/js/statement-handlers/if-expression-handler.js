@@ -1,12 +1,13 @@
 import {BodyDeclaration} from './body-declaration-handler';
 import {Expression} from './expression-handler';
+import {ElseExpression} from "./else-expression-handler";
 
 function IfExpression(expression, wrapper, lineNumber, type) {
     this.wrapper = wrapper;
     this.expression = expression;
     this.lineNumber = lineNumber;
     this.type = type;
-    this.payloads = [];
+    this.payloads = [{}];
 }
 
 IfExpression.prototype.init = function () {
@@ -29,8 +30,10 @@ IfExpression.prototype.handleIfBody = function () {
 
     let payloads = bodyExpression.getPayloads();
 
-    for(let i = 0; i < payloads.length; i++) {
-        this.payloads.push(payloads[i]);
+    this.payloads[0].body = [];
+
+    for (let i = 0; i < payloads.length; i++) {
+        this.payloads[0].body.push(payloads[i]);
     }
 
     return 'Body statement is handled';
@@ -54,27 +57,18 @@ IfExpression.prototype.handleIfElseStatement = function () {
 
     let payloads = alternative.getPayloads();
 
-    for(let i = 0; i < payloads.length; i++) {
+    for (let i = 0; i < payloads.length; i++) {
         this.payloads.push(payloads[i]);
     }
 };
 
 IfExpression.prototype.handleElseStatement = function () {
-    var bodyInstance;
-    this.increaseLineNumber();
+    var alternative = new ElseExpression(this.expression.alternate, this, this.lineNumber + 1, 'else if statement');
+    alternative.init();
 
-    this.declareElseStatement();
+    let payloads = alternative.getPayloads();
 
-    if (this.expression.alternate.body) {
-        bodyInstance = new BodyDeclaration(this.expression.alternate.body, this, this.lineNumber + 1);
-    } else {
-        bodyInstance = new BodyDeclaration(this.expression.alternate, this, this.lineNumber + 1);
-    }
-    bodyInstance.init();
-
-    let payloads = bodyInstance.getPayloads();
-
-    for(let i = 0; i < payloads.length; i++) {
+    for (let i = 0; i < payloads.length; i++) {
         this.payloads.push(payloads[i]);
     }
 };
@@ -85,13 +79,15 @@ IfExpression.prototype.declareElseStatement = function () {
         type: this.type ? this.type : this.expression.type,
     };
 
-    this.payloads.push(payload);
+    this.payloads.body[0].declaration = payload;
 };
 
 IfExpression.prototype.handleIfDeclaration = function () {
+    this.payloads[0].type = this.type ? this.type : this.expression.type;
+
     var payload = this.getPayload();
 
-    this.payloads.push(payload);
+    this.payloads[0].declaration = payload;
 
     return 'Done inserting the payload to the table';
 };
