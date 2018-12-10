@@ -3,7 +3,7 @@ import {WhileStatement} from './whileStatement';
 import {ElseIfStatement} from './elseIfStatement';
 import {ReturnStatement} from './returnStatement';
 import {getGlobalVariables, updateLocalVariable} from '../utils/common';
-import {IfStatement} from '../statement-code/ifStatement';
+import {IfStatement} from './ifStatement';
 
 function SymbolicSubstitutionHandler(payload, wrapper) {
     this.payload = payload;
@@ -35,6 +35,10 @@ SymbolicSubstitutionHandler.prototype.doSymbolicSubstitution = function () {
         if (!this.handlers[codeType]) continue;
 
         let symbolicSubstitutionHandler = new this.handlers[codeType](this, payload);
+        console.log(codeType)
+        console.log(payload)
+        console.log(symbolicSubstitutionHandler)
+        console.log(symbolicSubstitutionHandler.doSymbolicSubstitution)
         symbolicSubstitutionHandler.doSymbolicSubstitution();
     }
 };
