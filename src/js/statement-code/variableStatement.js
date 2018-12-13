@@ -28,13 +28,13 @@ VariableStatement.prototype.isParam = function () {
 };
 
 VariableStatement.prototype.getWrapperParams = function () {
-    if(!this.wrapper || !this.wrapper.getParams) return [];
+    if (!this.wrapper || !this.wrapper.getParams) return [];
 
     return this.wrapper.getParams();
 };
 
 VariableStatement.prototype.getParams = function () {
-    if(!this.wrapper || !this.wrapper.getParams) return [];
+    if (!this.wrapper || !this.wrapper.getParams) return [];
 
     return this.wrapper.getParams();
 };

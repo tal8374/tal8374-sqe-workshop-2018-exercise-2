@@ -1,6 +1,6 @@
 import {BodyDeclaration} from './body-declaration-handler';
 import {Expression} from './expression-handler';
-import {ElseExpression} from "./else-expression-handler";
+import {ElseExpression} from './else-expression-handler';
 
 function IfExpression(expression, wrapper, lineNumber, type) {
     this.wrapper = wrapper;

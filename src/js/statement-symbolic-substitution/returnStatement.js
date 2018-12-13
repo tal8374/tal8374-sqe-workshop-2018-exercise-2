@@ -6,17 +6,24 @@ function ReturnStatement(wrapper, payload) {
     this.localVariables = {};
 }
 
-ReturnStatement.prototype.handlers = {
-    'VariableDeclarator': updateLocalVariable,
-    'AssignmentExpression': updateLocalVariable,
-};
-
 ReturnStatement.prototype.doSymbolicSubstitution = function () {
     this.initializeLocalVariables();
 };
 
 ReturnStatement.prototype.initializeLocalVariables = function () {
-    updateLocalVariable(this.payload, this.localVariables, this.getGlobalVariables(), []);
+    updateLocalVariable(this.payload, this.localVariables, this.getGlobalVariables(), this.getParams());
+};
+
+ReturnStatement.prototype.getWrapperParams = function () {
+    if (!this.wrapper || !this.wrapper.getParams) return [];
+
+    return this.wrapper.getParams();
+};
+
+ReturnStatement.prototype.getParams = function () {
+    if (!this.wrapper || !this.wrapper.getParams) return [];
+
+    return this.wrapper.getParams();
 };
 
 ReturnStatement.prototype.getLocalVariables = function () {
@@ -24,7 +31,7 @@ ReturnStatement.prototype.getLocalVariables = function () {
 };
 
 ReturnStatement.prototype.getGlobalVariables = function () {
-    return getGlobalVariables(this.wrapper);
+    return getGlobalVariables(this.wrapper, this.getParams());
 };
 
 export {ReturnStatement};

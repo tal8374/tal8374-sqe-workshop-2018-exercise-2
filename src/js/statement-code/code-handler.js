@@ -16,7 +16,7 @@ function CodeHandler(payloads, wrapper, numberOfTabs = 0) {
 }
 
 CodeHandler.prototype.handlers = {
-    // 'VariableDeclarator': VariableStatement,
+    'VariableDeclarator': VariableStatement,
     'FunctionDeclaration': FunctionStatement,
     'WhileStatement': WhileStatement,
     'AssignmentExpression': AssignmentStatement,
@@ -49,13 +49,13 @@ CodeHandler.prototype.createCode = function () {
 };
 
 CodeHandler.prototype.getWrapperParams = function () {
-    if(!this.wrapper || !this.wrapper.getParams) return [];
+    if (!this.wrapper || !this.wrapper.getParams) return [];
 
     return this.wrapper.getParams;
 };
 
 CodeHandler.prototype.getParams = function () {
-    if(!this.wrapper || !this.wrapper.getParams) return [];
+    if (!this.wrapper || !this.wrapper.getParams) return [];
 
     return this.wrapper.getParams();
 };

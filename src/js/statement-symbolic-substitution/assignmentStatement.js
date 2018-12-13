@@ -14,9 +14,20 @@ AssignmentStatement.prototype.getLocalVariables = function () {
     return this.localVariables;
 };
 
+AssignmentStatement.prototype.getWrapperParams = function () {
+    if (!this.wrapper || !this.wrapper.getParams) return [];
+
+    return this.wrapper.getParams();
+};
+
+AssignmentStatement.prototype.getParams = function () {
+    if (!this.wrapper || !this.wrapper.getParams) return [];
+
+    return this.wrapper.getParams();
+};
 
 AssignmentStatement.prototype.getGlobalVariables = function () {
-    return getGlobalVariables(this.wrapper);
+    return getGlobalVariables(this.wrapper, this.getParams());
 };
 
 export {AssignmentStatement};

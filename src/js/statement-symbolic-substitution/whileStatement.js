@@ -26,7 +26,7 @@ WhileStatement.prototype.initializeLocalVariables = function () {
         let type = payload.type;
 
         if (this.handlers[type]) {
-            updateLocalVariable(payload, this.localVariables, this.getGlobalVariables(), []);
+            updateLocalVariable(payload, this.localVariables, this.getGlobalVariables(), this.getParams());
         } else {
             let symbolicSubstitution = new SymbolicSubstitutionHandler([payload], this);
             symbolicSubstitution.doSymbolicSubstitution();
@@ -35,18 +35,30 @@ WhileStatement.prototype.initializeLocalVariables = function () {
 };
 
 WhileStatement.prototype.getGlobalVariables = function () {
-    return getGlobalVariables(this.wrapper);
+    return getGlobalVariables(this.wrapper, this.getParams());
 };
 
 WhileStatement.prototype.getLocalVariables = function () {
     return this.localVariables;
 };
 
+WhileStatement.prototype.getWrapperParams = function () {
+    if (!this.wrapper || !this.wrapper.getParams) return [];
+
+    return this.wrapper.getParams;
+};
+
+WhileStatement.prototype.getParams = function () {
+    if (!this.wrapper || !this.wrapper.getParams) return [];
+
+    return this.wrapper.getParams();
+};
+
 WhileStatement.prototype.handleDeclaration = function () {
     if (!this.payload.declaration || !this.payload.declaration.condition) return;
     let payload = {};
     payload.value = this.payload.declaration.condition;
-    updateLocalVariable(payload, Object.assign({}, this.localVariables), this.getGlobalVariables(), []);
+    updateLocalVariable(payload, Object.assign({}, this.localVariables), this.getGlobalVariables(), this.getParams());
     this.payload.declaration.condition = payload.value;
 };
 

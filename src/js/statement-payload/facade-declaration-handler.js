@@ -4,7 +4,7 @@ function facadeDeclaration(parsedCode) {
     this.parsedCode = parsedCode;
 }
 
-facadeDeclaration.prototype.init = function () {
+facadeDeclaration.prototype.createPayloads = function () {
     this.handler = new BodyDeclaration(this.parsedCode.body, null, 1);
 
     this.handler.init();

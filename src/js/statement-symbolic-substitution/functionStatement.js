@@ -24,7 +24,7 @@ FunctionStatement.prototype.initializeLocalVariables = function () {
         let payload = body[i];
 
         if (this.handlers[type]) {
-            updateLocalVariable(payload, this.localVariables, this.getGlobalVariables(), this.payload.params);
+            updateLocalVariable(payload, this.localVariables, this.getGlobalVariables(), this.getParams());
         } else {
             let symbolicSubstitution = new SymbolicSubstitutionHandler([payload], this);
             symbolicSubstitution.doSymbolicSubstitution();
@@ -32,14 +32,25 @@ FunctionStatement.prototype.initializeLocalVariables = function () {
     }
 };
 
+FunctionStatement.prototype.getWrapperParams = function () {
+    if (!this.wrapper || !this.wrapper.getParams) return [];
+
+    return this.wrapper.getParams();
+};
+
+FunctionStatement.prototype.getParams = function () {
+    let params = this.payload.params;
+    let wrapperParams = this.getWrapperParams();
+
+    return [...params, ...wrapperParams];
+};
 
 FunctionStatement.prototype.getGlobalVariables = function () {
-    return getGlobalVariables(this.wrapper);
+    return getGlobalVariables(this.wrapper, this.getParams());
 };
 
 FunctionStatement.prototype.getLocalVariables = function () {
     return this.localVariables;
 };
-
 
 export {FunctionStatement};

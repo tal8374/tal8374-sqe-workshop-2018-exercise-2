@@ -58,13 +58,13 @@ IfStatement.prototype.closeCode = function () {
 };
 
 IfStatement.prototype.getWrapperParams = function () {
-    if(!this.wrapper || !this.wrapper.getParams) return [];
+    if (!this.wrapper || !this.wrapper.getParams) return [];
 
     return this.wrapper.getParams();
 };
 
 IfStatement.prototype.getParams = function () {
-    if(!this.wrapper || !this.wrapper.getParams) return [];
+    if (!this.wrapper || !this.wrapper.getParams) return [];
 
     return this.wrapper.getParams();
 };

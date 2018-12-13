@@ -30,13 +30,13 @@ AssignmentStatement.prototype.isParam = function () {
 };
 
 AssignmentStatement.prototype.getWrapperParams = function () {
-    if(!this.wrapper || !this.wrapper.getParams) return [];
+    if (!this.wrapper || !this.wrapper.getParams) return [];
 
     return this.wrapper.getParams();
 };
 
 AssignmentStatement.prototype.getParams = function () {
-    if(!this.wrapper || !this.wrapper.getParams) return [];
+    if (!this.wrapper || !this.wrapper.getParams) return [];
 
     return this.wrapper.getParams();
 };

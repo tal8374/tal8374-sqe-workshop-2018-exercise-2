@@ -35,10 +35,6 @@ SymbolicSubstitutionHandler.prototype.doSymbolicSubstitution = function () {
         if (!this.handlers[codeType]) continue;
 
         let symbolicSubstitutionHandler = new this.handlers[codeType](this, payload);
-        console.log(codeType)
-        console.log(payload)
-        console.log(symbolicSubstitutionHandler)
-        console.log(symbolicSubstitutionHandler.doSymbolicSubstitution)
         symbolicSubstitutionHandler.doSymbolicSubstitution();
     }
 };
@@ -51,12 +47,24 @@ SymbolicSubstitutionHandler.prototype.initializeLocalVariables = function () {
 
         if (!this.localVariablesHandlers[type]) continue;
 
-        updateLocalVariable(body[i], this.localVariables, this.getGlobalVariables(), []);
+        updateLocalVariable(body[i], this.localVariables, this.getGlobalVariables(), this.getParams());
     }
 };
 
 SymbolicSubstitutionHandler.prototype.getGlobalVariables = function () {
-    return getGlobalVariables(this.wrapper);
+    return getGlobalVariables(this.wrapper, this.getParams());
+};
+
+SymbolicSubstitutionHandler.prototype.getWrapperParams = function () {
+    if(!this.wrapper || !this.wrapper.getParams) return [];
+
+    return this.wrapper.getParams;
+};
+
+SymbolicSubstitutionHandler.prototype.getParams = function () {
+    if(!this.wrapper || !this.wrapper.getParams) return [];
+
+    return this.wrapper.getParams();
 };
 
 SymbolicSubstitutionHandler.prototype.getLocalVariables = function () {

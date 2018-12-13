@@ -35,6 +35,10 @@ function binaryExpressionHandler(conditionExpression) {
     let operator = conditionExpression.operator;
     let right = new Expression(conditionExpression.right).getExpression();
 
+    if (operator === '*') {
+        return '(' + left + ')' + operator + '(' + right + ')';
+    }
+
     return left + operator + right;
 }
 

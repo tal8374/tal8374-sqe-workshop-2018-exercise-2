@@ -81,13 +81,13 @@ ElseIfStatement.prototype.closeCode = function () {
 };
 
 ElseIfStatement.prototype.getWrapperParams = function () {
-    if(!this.wrapper || !this.wrapper.getParams) return [];
+    if (!this.wrapper || !this.wrapper.getParams) return [];
 
     return this.wrapper.getParams();
 };
 
 ElseIfStatement.prototype.getParams = function () {
-    if(!this.wrapper || !this.wrapper.getParams) return [];
+    if (!this.wrapper || !this.wrapper.getParams) return [];
 
     return this.wrapper.getParams();
 };
