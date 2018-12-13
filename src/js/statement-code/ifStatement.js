@@ -1,9 +1,9 @@
-import {addMarginLeft} from '../utils/common';
+import {addColor, addMarginLeft} from '../utils/common';
 import {CodeHandler} from './code-handler';
 
-function IfStatement(wrapper, payloads, numberOfTabs) {
+function IfStatement(wrapper, payload, numberOfTabs) {
     this.wrapper = wrapper;
-    this.payloads = payloads;
+    this.payload = payload;
     this.code = [];
     this.numberOfTabs = numberOfTabs;
 }
@@ -18,7 +18,7 @@ IfStatement.prototype.createCode = function () {
 
 
 IfStatement.prototype.createDeclarationCode = function () {
-    let conditionText = ' (' + this.payloads.declaration.condition + ')';
+    let conditionText = ' (' + this.payload.declaration.condition + ')';
 
     let text = 'if ' + conditionText + ' {';
 
@@ -28,11 +28,13 @@ IfStatement.prototype.createDeclarationCode = function () {
 
     addMarginLeft(code, this.numberOfTabs);
 
+    addColor(code, this.payload.style.backgroundColor);
+
     this.code.push(code);
 };
 
 IfStatement.prototype.createBodyCode = function () {
-    let bodyCode = this.payloads.body;
+    let bodyCode = this.payload.body;
 
     for (let i = 0; i < bodyCode.length; i++) {
         let codeCreator = new CodeHandler([bodyCode[i]], this, this.numberOfTabs + 1);

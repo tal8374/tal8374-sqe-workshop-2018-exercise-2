@@ -1,9 +1,9 @@
-import {addMarginLeft} from '../utils/common';
+import {addColor, addMarginLeft} from '../utils/common';
 import {CodeHandler} from './code-handler';
 
-function ElseIfStatement(wrapper, payloads, numberOfTabs) {
+function ElseIfStatement(wrapper, payload, numberOfTabs) {
     this.wrapper = wrapper;
-    this.payloads = payloads;
+    this.payload = payload;
     this.code = [];
     this.numberOfTabs = numberOfTabs;
 }
@@ -25,11 +25,11 @@ ElseIfStatement.prototype.createDeclarationCode = function () {
 };
 
 ElseIfStatement.prototype.isElseIfStatement = function () {
-    return this.payloads.declaration;
+    return this.payload.declaration;
 };
 
 ElseIfStatement.prototype.createElseIfStatement = function () {
-    let conditionText = ' (' + this.payloads.declaration.condition + ')';
+    let conditionText = ' (' + this.payload.declaration.condition + ')';
 
     let text = 'else if ' + conditionText + ' {';
 
@@ -38,6 +38,8 @@ ElseIfStatement.prototype.createElseIfStatement = function () {
     };
 
     addMarginLeft(code, this.numberOfTabs);
+
+    addColor(code, this.payload.style.backgroundColor);
 
     this.code.push(code);
 };
@@ -55,7 +57,7 @@ ElseIfStatement.prototype.createElseStatement = function () {
 };
 
 ElseIfStatement.prototype.createBodyCode = function () {
-    let bodyCode = this.payloads.body;
+    let bodyCode = this.payload.body;
 
     for (let i = 0; i < bodyCode.length; i++) {
         let codeCreator = new CodeHandler([bodyCode[i]], this, this.numberOfTabs + 1);

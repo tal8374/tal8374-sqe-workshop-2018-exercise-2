@@ -5,7 +5,12 @@ function printCode(code) {
         var div = document.createElement('div');
 
         div.innerText = codeStatement.text;
-        div.style.marginLeft = codeStatement.style.marginLeft;
+
+        if (codeStatement.style) {
+            div.style.marginLeft = codeStatement.style.marginLeft;
+            div.style.backgroundColor = codeStatement.style.backgroundColor;
+        }
+
         codeWrapper.appendChild(div);
     });
 }
@@ -18,8 +23,16 @@ function addMarginLeft(code, numberOfTabs) {
     code.style.marginLeft = 20 * numberOfTabs + 'px';
 }
 
+function addColor(code, backgroundColor) {
+    if (!code.style) {
+        code.style = {};
+    }
+
+    code.style.backgroundColor = backgroundColor;
+}
+
 function replaceAll(str, search, replacement, params) {
-    if(isParam(search, params)) return str;
+    if (isParam(search, params)) return str;
 
     return str.split(search).join(replacement);
 }
@@ -40,7 +53,7 @@ function updateLocalVariable(payload, localVariables, globalVariables, params) {
 function updateParamValue(params, variableName, variableContent) {
     let paramPayload = params.filter(param => param.name === variableName);
 
-    if(paramPayload.length !== 1) return;
+    if (paramPayload.length !== 1) return;
 
     paramPayload = paramPayload[0];
     paramPayload.value = variableContent;
@@ -114,5 +127,18 @@ function getGlobalVariablesHelper(wrapper, params) {
     return wrapperLocalVariables;
 }
 
+function colorCondition(payload, params, condition, inputs) {
+    for (let i = 0; i < params.length; i++) {
+        condition = replaceAll(condition, params[i].name, inputs[i], []);
+    }
 
-export {printCode, addMarginLeft, replaceAll, updateLocalVariable, getGlobalVariables};
+    let isEntered = eval(condition);
+
+    if (!payload.style) {
+        payload.style = {};
+    }
+
+    payload.style.backgroundColor = isEntered ? '#7FFF00' : '#FF4500';
+}
+
+export {printCode, addMarginLeft, replaceAll, updateLocalVariable, getGlobalVariables, colorCondition, addColor};

@@ -5,19 +5,19 @@ import {facadeDeclaration} from './statement-payload/facade-declaration-handler'
 import {CodeHandler} from './statement-code/code-handler';
 import {printCode} from './utils/common';
 import {SymbolicSubstitutionHandler} from './statement-symbolic-substitution/symbolic-substitution-handler';
+import {ColorHandler} from './color-condition/color-handler';
 
 $(document).ready(function () {
 
     $('#button').click(() => {
         let payloads = getPayloads();
 
-        // console.log(payloads);
-
         doSymbolicSubstitution(payloads);
 
-        // console.log(payloads);
+        let inputCode = $('#inputCode').val();
+        let inputCodeSplitted = parseInput(inputCode);
 
-        // let inputCode = $('#inputCode').val();
+        colorCondition(payloads, inputCodeSplitted);
 
         let code = createCode(payloads);
 
@@ -46,3 +46,17 @@ function createCode(payloads) {
     codeCreatorHandler.createCode();
     return codeCreatorHandler.getCode();
 }
+
+function colorCondition(payloads, input) {
+    let colorCode = new ColorHandler(payloads, null, input);
+    colorCode.colorCode();
+}
+
+
+function parseInput(input) {
+    input = '[' + input + ']';
+
+    return eval(input);
+}
+
+
