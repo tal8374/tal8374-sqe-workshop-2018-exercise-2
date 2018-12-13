@@ -1,4 +1,4 @@
-import {codeHandler} from './code-handler';
+import {CodeHandler} from './code-handler';
 import {addMarginLeft} from '../utils/common';
 
 function FunctionStatement(wrapper, payloads, numberOfTabs) {
@@ -51,7 +51,7 @@ FunctionStatement.prototype.createBodyCode = function () {
     let bodyCode = this.payloads.body;
 
     for (let i = 0; i < bodyCode.length; i++) {
-        let codeCreator = new codeHandler([bodyCode[i]], this, this.numberOfTabs + 1);
+        let codeCreator = new CodeHandler([bodyCode[i]], this, this.numberOfTabs + 1);
         codeCreator.createCode();
         let createdCode = codeCreator.getCode();
 
@@ -71,6 +71,19 @@ FunctionStatement.prototype.closeCode = function () {
     addMarginLeft(code, this.numberOfTabs);
 
     this.code.push(code);
+};
+
+FunctionStatement.prototype.getWrapperParams = function () {
+    if(!this.wrapper || !this.wrapper.getParams) return [];
+
+    return this.wrapper.getParams();
+};
+
+FunctionStatement.prototype.getParams = function () {
+    let params = this.payloads.params;
+    let wrapperParams = this.getWrapperParams();
+
+    return [...params, ...wrapperParams];
 };
 
 FunctionStatement.prototype.getCode = function () {

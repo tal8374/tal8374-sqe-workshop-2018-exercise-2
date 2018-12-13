@@ -8,15 +8,15 @@ import {ReturnStatement} from './returnStatement';
 import {BreakStatement} from './breakStatement';
 import {ContinueStatement} from './continueStatement';
 
-function codeHandler(payloads, wrapper, numberOfTabs = 0) {
+function CodeHandler(payloads, wrapper, numberOfTabs = 0) {
     this.payloads = payloads;
     this.wrapper = wrapper;
     this.code = [];
     this.numberOfTabs = numberOfTabs;
 }
 
-codeHandler.prototype.handlers = {
-    'VariableDeclarator': VariableStatement,
+CodeHandler.prototype.handlers = {
+    // 'VariableDeclarator': VariableStatement,
     'FunctionDeclaration': FunctionStatement,
     'WhileStatement': WhileStatement,
     'AssignmentExpression': AssignmentStatement,
@@ -27,7 +27,7 @@ codeHandler.prototype.handlers = {
     'ContinueStatement': ContinueStatement,
 };
 
-codeHandler.prototype.createCode = function () {
+CodeHandler.prototype.createCode = function () {
     for (let i = 0; i < this.payloads.length; i++) {
         let codeType = this.payloads[i].type;
 
@@ -48,13 +48,25 @@ codeHandler.prototype.createCode = function () {
     }
 };
 
-codeHandler.prototype.printCode = function () {
+CodeHandler.prototype.getWrapperParams = function () {
+    if(!this.wrapper || !this.wrapper.getParams) return [];
+
+    return this.wrapper.getParams;
+};
+
+CodeHandler.prototype.getParams = function () {
+    if(!this.wrapper || !this.wrapper.getParams) return [];
+
+    return this.wrapper.getParams();
+};
+
+CodeHandler.prototype.printCode = function () {
 
 };
 
-codeHandler.prototype.getCode = function () {
+CodeHandler.prototype.getCode = function () {
     return this.code;
 };
 
 
-export {codeHandler};
+export {CodeHandler};

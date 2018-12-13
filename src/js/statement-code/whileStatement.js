@@ -1,4 +1,4 @@
-import {codeHandler} from './code-handler';
+import {CodeHandler} from './code-handler';
 import {addMarginLeft} from '../utils/common';
 
 function WhileStatement(wrapper, payloads, numberOfTabs) {
@@ -34,7 +34,7 @@ WhileStatement.prototype.createBodyCode = function () {
     let bodyCode = this.payloads.body;
 
     for (let i = 0; i < bodyCode.length; i++) {
-        let codeCreator = new codeHandler([bodyCode[i]], this, this.numberOfTabs + 1);
+        let codeCreator = new CodeHandler([bodyCode[i]], this, this.numberOfTabs + 1);
         codeCreator.createCode();
         let createdCode = codeCreator.getCode();
 
@@ -54,6 +54,18 @@ WhileStatement.prototype.closeCode = function () {
     addMarginLeft(code, this.numberOfTabs);
 
     this.code.push(code);
+};
+
+WhileStatement.prototype.getWrapperParams = function () {
+    if(!this.wrapper || !this.wrapper.getParams) return [];
+
+    return this.wrapper.getParams;
+};
+
+WhileStatement.prototype.getParams = function () {
+    if(!this.wrapper || !this.wrapper.getParams) return [];
+
+    return this.wrapper.getParams();
 };
 
 WhileStatement.prototype.getCode = function () {

@@ -1,5 +1,5 @@
 import {addMarginLeft} from '../utils/common';
-import {codeHandler} from './code-handler';
+import {CodeHandler} from './code-handler';
 
 function IfStatement(wrapper, payloads, numberOfTabs) {
     this.wrapper = wrapper;
@@ -35,7 +35,7 @@ IfStatement.prototype.createBodyCode = function () {
     let bodyCode = this.payloads.body;
 
     for (let i = 0; i < bodyCode.length; i++) {
-        let codeCreator = new codeHandler([bodyCode[i]], this, this.numberOfTabs + 1);
+        let codeCreator = new CodeHandler([bodyCode[i]], this, this.numberOfTabs + 1);
         codeCreator.createCode();
         let createdCode = codeCreator.getCode();
 
@@ -57,6 +57,17 @@ IfStatement.prototype.closeCode = function () {
     this.code.push(code);
 };
 
+IfStatement.prototype.getWrapperParams = function () {
+    if(!this.wrapper || !this.wrapper.getParams) return [];
+
+    return this.wrapper.getParams();
+};
+
+IfStatement.prototype.getParams = function () {
+    if(!this.wrapper || !this.wrapper.getParams) return [];
+
+    return this.wrapper.getParams();
+};
 
 IfStatement.prototype.getCode = function () {
     return this.code;

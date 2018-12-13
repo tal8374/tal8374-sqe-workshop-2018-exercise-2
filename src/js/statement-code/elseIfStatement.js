@@ -1,5 +1,5 @@
 import {addMarginLeft} from '../utils/common';
-import {codeHandler} from './code-handler';
+import {CodeHandler} from './code-handler';
 
 function ElseIfStatement(wrapper, payloads, numberOfTabs) {
     this.wrapper = wrapper;
@@ -58,7 +58,7 @@ ElseIfStatement.prototype.createBodyCode = function () {
     let bodyCode = this.payloads.body;
 
     for (let i = 0; i < bodyCode.length; i++) {
-        let codeCreator = new codeHandler([bodyCode[i]], this, this.numberOfTabs + 1);
+        let codeCreator = new CodeHandler([bodyCode[i]], this, this.numberOfTabs + 1);
         codeCreator.createCode();
         let createdCode = codeCreator.getCode();
 
@@ -78,6 +78,18 @@ ElseIfStatement.prototype.closeCode = function () {
     addMarginLeft(code, this.numberOfTabs);
 
     this.code.push(code);
+};
+
+ElseIfStatement.prototype.getWrapperParams = function () {
+    if(!this.wrapper || !this.wrapper.getParams) return [];
+
+    return this.wrapper.getParams();
+};
+
+ElseIfStatement.prototype.getParams = function () {
+    if(!this.wrapper || !this.wrapper.getParams) return [];
+
+    return this.wrapper.getParams();
 };
 
 ElseIfStatement.prototype.getCode = function () {
