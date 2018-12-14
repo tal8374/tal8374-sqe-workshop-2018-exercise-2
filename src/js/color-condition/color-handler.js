@@ -21,7 +21,7 @@ ColorHandler.prototype.colorCode = function () {
     for (let i = 0; i < this.payloads.length; i++) {
         let codeType = this.payloads[i].type;
 
-        if (!this.handlers[codeType]) return;
+        if (!this.handlers[codeType]) continue;
 
         let codeHandler = new this.handlers[codeType](this.wrapper, this.payloads[i], this.input);
         codeHandler.colorCode();
