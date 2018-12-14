@@ -34,6 +34,10 @@ function addColor(code, backgroundColor) {
 function replaceAll(str, search, replacement, params) {
     if (isParam(search, params)) return str;
 
+    if (replacement.constructor === Array) {
+        replacement = '[' + replacement.toString() + ']';
+    }
+
     return str.split(search).join(replacement);
 }
 
@@ -132,7 +136,7 @@ function colorCondition(payload, params, condition, inputs) {
         condition = replaceAll(condition, params[i].name, inputs[i], []);
     }
 
-    let isEntered = eval(condition);
+    let isEntered = checkCondition(condition);
 
     if (!payload.style) {
         payload.style = {};
@@ -140,5 +144,15 @@ function colorCondition(payload, params, condition, inputs) {
 
     payload.style.backgroundColor = isEntered ? '#7FFF00' : '#FF4500';
 }
+
+function checkCondition(condition) {
+    try {
+        return eval(condition);
+
+    } catch (e) {
+        return false;
+    }
+}
+
 
 export {printCode, addMarginLeft, replaceAll, updateLocalVariable, getGlobalVariables, colorCondition, addColor};
