@@ -150,6 +150,10 @@ function checkCondition(condition) {
         return eval(condition);
 
     } catch (e) {
+        if (typeof condition === 'string') {
+            return condition.length;
+        }
+
         return false;
     }
 }
