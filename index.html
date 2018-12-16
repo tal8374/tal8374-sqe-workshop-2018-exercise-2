@@ -5,7 +5,7 @@
     <title>Title</title>
     <link rel="stylesheet" type="text/css" href="./src/style/table.css">
 </head>
-<button id="button">Show Table</button>
+<button id="button">Do substitution</button>
 <!--<button onclick="myFunction()">Try it</button>-->
 <br>
 <table id="myTable">
@@ -48,7 +48,7 @@
         </td>
         <td>
             <div>
-                <label>Parsed code here</label>
+                <label>Enter input here</label>
             </div>
         </td>
     </tr>
@@ -60,27 +60,15 @@
         </td>
         <td>
             <div class="textAreaWrapper">
-                <textarea id="parsedCode" title="Parse code"></textarea>
+                <textarea id="inputCode" title="Parse code"></textarea>
             </div>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <div>
-                <button id="codeSubmissionButton">Parse code</button>
-            </div>
-        </td>
-        <td>
         </td>
     </tr>
 </table>
 
-<div class="textAreaWrapper">
-    <textarea id="substitutionCode" title="Substitution code"></textarea>
-</div>
+<div id="codeWrapper"></div>
 
 
 <script src="dist/bundle.js"></script>
-<!--<script src="./src/js/table-handler.js"></script>-->
 </body>
 </html>
