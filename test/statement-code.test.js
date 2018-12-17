@@ -94,6 +94,46 @@ describe('The color condition', () => {
         );
     });
 
+    it('is should do  color condition to function with while statement', () => {
+        let codeToParse = 'function foo(x){\n' +
+            '    let arr = [33]\n' +
+            '\n' +
+            '    if(x.length === 2) {\n' +
+            '        \n' +
+            '    } else if(x[1]) {\n' +
+            '        \n' +
+            '    } else if(arr.length === 1) {\n' +
+            '\n' +
+            '    }\n' +
+            '\n' +
+            '    x = arr[0]\n' +
+            '    return arr[0] + x\n' +
+            '}\n';
+        let parsedCode = parseCode(codeToParse);
+
+        let facadeDeclarationHandler = new facadeDeclaration(parsedCode);
+        facadeDeclarationHandler.createPayloads();
+        let payload = facadeDeclarationHandler.getPayloads();
+
+        let inputCode = '1';
+        let inputCodeSplitted = eval('[' + inputCode + ']');
+
+        let colorCode = new ColorHandler(payload, null, inputCodeSplitted);
+        colorCode.colorCode();
+
+        let codeCreatorHandler = new CodeHandler(payload);
+        codeCreatorHandler.createCode();
+        let code = codeCreatorHandler.getCode();
+
+        assert.equal(
+            JSON.stringify(code),
+            '[{"text":"function foo (x) {","style":{"marginLeft":"0px"}},{"text":"if  (x.length===2) {","style":{"marginLeft":"20px","backgroundColor":"#7FFF00"}},{"text":"}",' +
+            '"style":{"marginLeft":"20px"}},{"text":"else if  (x[1]) {","style":{"marginLeft":"20px","backgroundColor":"#FF4500"}},{"text":"}","style":{"marginLeft":"20px"}},{"text":"else i' +
+            'f  (arr.length===1) {","style":{"marginLeft":"20px","backgroundColor":"#7FFF00"}},{"text":"}","style":{"marginLeft":"20px"}},{"text":"x = arr[0];","style":{"marginLeft":"20px"}},' +
+            '{"text":"return arr[0]+x;","style":{"marginLeft":"20px"}},{"text":"}","style":{"marginLeft":"0px"}}]'
+        );
+    });
+
     it('is should do  color condition to if statements inside all if statements', () => {
         let codeToParse = 'if (true) {\n' +
             '    if (true) {\n' +
@@ -191,45 +231,68 @@ describe('The color condition', () => {
         );
     });
 
-    // it('is should do  color condition with only boolean ', () => {
-    //     let codeToParse = 'function name(x,y,z) {\n' +
-    //         '    if (true) {\n' +
-    //         '        let c1 = x\n' +
-    //         '        let c2 = y\n' +
-    //         '        let c3 = z\n' +
-    //         '    } else if (false) {\n' +
-    //         '        let c1 = x\n' +
-    //         '        let c2 = y\n' +
-    //         '        let c3 = z\n' +
-    //         '    } else {\n' +
-    //         '        let c1 = x\n' +
-    //         '        let c2 = y\n' +
-    //         '        let c3 = z\n' +
-    //         '    }\n' +
-    //         '}';
-    //     let parsedCode = parseCode(codeToParse);
-    //
-    //     let facadeDeclarationHandler = new facadeDeclaration(parsedCode);
-    //     facadeDeclarationHandler.createPayloads();
-    //     let payload = facadeDeclarationHandler.getPayloads();
-    //
-    //     let inputCode = '1,2,3';
-    //     let inputCodeSplitted = eval('[' + inputCode + ']');
-    //
-    //     let colorCode = new ColorHandler(payload, null, inputCodeSplitted);
-    //     colorCode.colorCode();
-    //
-    //     let codeCreatorHandler = new CodeHandler(payload);
-    //     codeCreatorHandler.createCode();
-    //     let code = codeCreatorHandler.getCode();
-    //
-    //     assert.equal(
-    //         JSON.stringify(code),
-    //         '[{"text":"function name (x, y, z) {","style":{"marginLeft":"0px"}},{"text":"if  (true) {","style":{"marginLeft":"20px","backgroundColor":"#7FFF00"}},{"text":"}",' +
-    //         '"style":{"marginLeft":"20px"}},{"text":"else if  (false) {","style":{"marginLeft":"20px","backgroundColor":"#FF4500"}},{"text":"}","style":{"marginLeft":"20px"}},{"text":"else' +
-    //         '{","style":{"marginLeft":"20px"}},{"text":"}","style":{"marginLeft":"20px"}},{"text":"}","style":{"marginLeft":"0px"}}]'
-    //     );
-    // });
+    it('is should handle only if statement ', () => {
+        let codeToParse = 'if (b < z) {\n' +
+            '    c = c + 5;\n' +
+            '\n' +
+            '} else if (b < z * 2) {\n' +
+            '    c = c + x + 5;\n' +
+            '\n' +
+            '} else {\n' +
+            '    c = c + z + 5;\n' +
+            '\n' +
+            '}';
+        let parsedCode = parseCode(codeToParse);
+
+        let facadeDeclarationHandler = new facadeDeclaration(parsedCode);
+        facadeDeclarationHandler.createPayloads();
+        let payload = facadeDeclarationHandler.getPayloads();
+
+        let inputCode = '1,2,3';
+        let inputCodeSplitted = eval('[' + inputCode + ']');
+
+        let colorCode = new ColorHandler(payload, null, inputCodeSplitted);
+        colorCode.colorCode();
+
+        let codeCreatorHandler = new CodeHandler(payload);
+        codeCreatorHandler.createCode();
+        let code = codeCreatorHandler.getCode();
+
+        assert.equal(
+            JSON.stringify(code),
+            '[{"text":"if  (b<z) {","style":{"marginLeft":"0px","backgroundColor":"#7FFF00"}},{"text":"}","style":{"marginLeft":"0px"}},{"text":"else if  (b<(z)*(2)) {","styl' +
+            'e":{"marginLeft":"0px","backgroundColor":"#7FFF00"}},{"text":"}","style":{"marginLeft":"0px"}},{"text":"else  {","style":{"marginLeft":"0px"}},{"text":"}","style":{"marginLe' +
+            'ft":"0px"}}]'
+        );
+    });
+
+    it('is should handle only while statement', () => {
+        let codeToParse = 'while (a < z) {\n' +
+            '        c = a + b;\n' +
+            '        z = c * 2;\n' +
+            '    }\n' +
+            '    \n';
+        let parsedCode = parseCode(codeToParse);
+
+        let facadeDeclarationHandler = new facadeDeclaration(parsedCode);
+        facadeDeclarationHandler.createPayloads();
+        let payload = facadeDeclarationHandler.getPayloads();
+
+        let inputCode = '1,2,3';
+        let inputCodeSplitted = eval('[' + inputCode + ']');
+
+        let colorCode = new ColorHandler(payload, null, inputCodeSplitted);
+        colorCode.colorCode();
+
+        let codeCreatorHandler = new CodeHandler(payload);
+        codeCreatorHandler.createCode();
+        let code = codeCreatorHandler.getCode();
+
+        assert.equal(
+            JSON.stringify(code),
+            '[{"text":"while  (a<z) {","style":{"marginLeft":"0px"}},{"text":"}","style":{"marginLeft":"0px"}}]'
+        );
+    });
 
     it('is should handle unrecognized statements', () => {
         let codeToParse = 'try {\n' +
@@ -257,47 +320,4 @@ describe('The color condition', () => {
             '[]'
         );
     });
-
-    // it('is should do  color condition to function with if statement', () => {
-    //     let codeToParse = 'function foo(x, y, z){\n' +
-    //         '    let a = x + 1;\n' +
-    //         '    let b = a + y;\n' +
-    //         '    let c = 0;\n' +
-    //         '    \n' +
-    //         '    if (b < z) {\n' +
-    //         '        c = c + 5;\n' +
-    //         '        return x + y + z + c;\n' +
-    //         '    } else if (b < z * 2) {\n' +
-    //         '        c = c + x + 5;\n' +
-    //         '        return x + y + z + c;\n' +
-    //         '    } else {\n' +
-    //         '        c = c + z + 5;\n' +
-    //         '        return x + y + z + c;\n' +
-    //         '    }\n' +
-    //         '}\n';
-    //     let parsedCode = parseCode(codeToParse);
-    //
-    //     let facadeDeclarationHandler = new facadeDeclaration(parsedCode);
-    //     facadeDeclarationHandler.createPayloads();
-    //     let payload = facadeDeclarationHandler.getPayloads();
-    //
-    //     let inputCode = '1,2,3';
-    //     let inputCodeSplitted = eval('[' + inputCode + ']');
-    //
-    //     let colorCode = new ColorHandler(payload, null, inputCodeSplitted);
-    //     colorCode.colorCode();
-    //
-    //     let codeCreatorHandler = new CodeHandler(payload);
-    //     codeCreatorHandler.createCode();
-    //     let code = codeCreatorHandler.getCode();
-    //
-    //     assert.equal(
-    //         JSON.stringify(code),
-    //         '[{"text":"function foo (x, y, z) {","style":{"marginLeft":"0px"}},{"text":"if  (b<z) {","style":{"marginLeft":"20px","backgroundColor":"#7FFF00"}},{"text":"return' +
-    //         'x+y+z+c;","style":{"marginLeft":"40px"}},{"text":"}","style":{"marginLeft":"20px"}},{"text":"else if  (b<(z)*(2)) {","style":{"marginLeft":"20px","backgroundColor":"#7FFF00"}},{' +
-    //         '"text":"return x+y+z+c;","style":{"marginLeft":"40px"}},{"text":"}","style":{"marginLeft":"20px"}},{"text":"else  {","style":{"marginLeft":"20px"}},{"text":"return x+y+z+c;","' +
-    //         'style":{"marginLeft":"40px"}},{"text":"}","style":{"marginLeft":"20px"}},{"text":"}","style":{"marginLeft":"0px"}}]'
-    //     );
-    // });
-
 });
