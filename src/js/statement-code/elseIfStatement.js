@@ -82,12 +82,6 @@ ElseIfStatement.prototype.closeCode = function () {
     this.code.push(code);
 };
 
-ElseIfStatement.prototype.getWrapperParams = function () {
-    if (!this.wrapper || !this.wrapper.getParams) return [];
-
-    return this.wrapper.getParams();
-};
-
 ElseIfStatement.prototype.getParams = function () {
     if (!this.wrapper || !this.wrapper.getParams) return [];
 

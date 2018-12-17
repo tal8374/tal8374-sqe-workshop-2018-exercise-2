@@ -24,18 +24,10 @@ AssignmentStatement.prototype.createCode = function () {
 AssignmentStatement.prototype.isParam = function () {
     let params = this.getWrapperParams();
 
-    if (!params) return false;
-
     return params.filter(param => param.name === this.payloads.name).length === 0;
 };
 
 AssignmentStatement.prototype.getWrapperParams = function () {
-    if (!this.wrapper || !this.wrapper.getParams) return [];
-
-    return this.wrapper.getParams();
-};
-
-AssignmentStatement.prototype.getParams = function () {
     if (!this.wrapper || !this.wrapper.getParams) return [];
 
     return this.wrapper.getParams();

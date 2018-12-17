@@ -34,12 +34,6 @@ ElseIfStatement.prototype.isElseIfStatement = function () {
     return this.payload.declaration;
 };
 
-ElseIfStatement.prototype.getWrapperParams = function () {
-    if (!this.wrapper || !this.wrapper.getParams) return [];
-
-    return this.wrapper.getParams();
-};
-
 ElseIfStatement.prototype.getParams = function () {
     if (!this.wrapper || !this.wrapper.getParams) return [];
 

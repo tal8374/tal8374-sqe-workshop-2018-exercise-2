@@ -80,17 +80,9 @@ function doSymbolicSubstitutionWithGlobalVariableTo(variableContent, variableNam
 }
 
 function getGlobalVariables(wrapper, params) {
-    if (!wrapper) {
-        return {};
-    }
-
-    return getGlobalVariablesHelper(wrapper, params);
-}
-
-function getGlobalVariablesHelper(wrapper, params) {
     if (!wrapper) return {};
 
-    let tmp = getGlobalVariablesHelper(wrapper.wrapper, params);
+    let tmp = getGlobalVariables(wrapper.wrapper, params);
     let wrapperLocalVariables = wrapper.getLocalVariables();
 
     for (var property in tmp) {
@@ -101,7 +93,6 @@ function getGlobalVariablesHelper(wrapper, params) {
         } else {
             wrapperLocalVariables[property] = tmp[property];
         }
-
     }
 
     return wrapperLocalVariables;

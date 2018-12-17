@@ -59,12 +59,6 @@ IfStatement.prototype.closeCode = function () {
     this.code.push(code);
 };
 
-IfStatement.prototype.getWrapperParams = function () {
-    if (!this.wrapper || !this.wrapper.getParams) return [];
-
-    return this.wrapper.getParams();
-};
-
 IfStatement.prototype.getParams = function () {
     if (!this.wrapper || !this.wrapper.getParams) return [];
 

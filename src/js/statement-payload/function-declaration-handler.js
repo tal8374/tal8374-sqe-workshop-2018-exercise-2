@@ -82,10 +82,6 @@ FunctionDeclaration.prototype.increaseLineNumber = function () {
     }
 };
 
-FunctionDeclaration.prototype.getLineNumber = function () {
-    return this.lineNumber;
-};
-
 FunctionDeclaration.prototype.getPayloads = function () {
     return this.payloads;
 };

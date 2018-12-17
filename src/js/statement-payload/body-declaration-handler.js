@@ -65,10 +65,6 @@ BodyDeclaration.prototype.increaseLineNumber = function () {
     }
 };
 
-BodyDeclaration.prototype.getLineNumber = function () {
-    return this.lineNumber;
-};
-
 BodyDeclaration.prototype.getPayloads = function () {
     return this.payloads;
 };

@@ -47,10 +47,6 @@ ElseExpression.prototype.increaseLineNumber = function () {
     }
 };
 
-ElseExpression.prototype.getLineNumber = function () {
-    return this.lineNumber;
-};
-
 ElseExpression.prototype.getPayloads = function () {
     return this.payloads;
 };

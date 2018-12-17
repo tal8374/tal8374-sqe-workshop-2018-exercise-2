@@ -9,35 +9,15 @@ function AssignmentExpression(body, wrapper, lineNumber, type) {
 }
 
 AssignmentExpression.prototype.init = function () {
-    if (!this.expression) {
-        return;
-    }
-
     if (this.expression.expressions) {
         this.handleMultipleExpression();
-    } else if (this.expression.type === 'UpdateExpression') {
-        this.handleUpdateExpression();
-    }
-    else {
+    }  else {
         this.handleSingleExpression();
     }
 
     this.increaseLineNumber();
 
     return 'Success';
-};
-
-AssignmentExpression.prototype.handleUpdateExpression = function () {
-    let valueExpression = new ValueExpression(this.expression.argument);
-    let name = valueExpression.getValue() + '++';
-
-    let payload = {
-        type: this.type ? this.type : this.expression.type,
-        name: name,
-        lineNumber: this.lineNumber,
-    };
-
-    this.payloads.push(payload);
 };
 
 AssignmentExpression.prototype.handleSingleExpression = function () {
@@ -73,8 +53,6 @@ AssignmentExpression.prototype.parseAssignmentExpressionHandler = function (expr
 };
 
 AssignmentExpression.prototype.getName = function (expression) {
-    if (!expression.left) return '';
-
     return expression.left.name ? expression.left.name : expression.left.property.name;
 };
 
@@ -84,10 +62,6 @@ AssignmentExpression.prototype.increaseLineNumber = function () {
     if (this.wrapper) {
         this.wrapper.increaseLineNumber();
     }
-};
-
-AssignmentExpression.prototype.getLineNumber = function () {
-    return this.lineNumber;
 };
 
 AssignmentExpression.prototype.getPayloads = function () {

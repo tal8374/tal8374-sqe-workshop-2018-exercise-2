@@ -40,10 +40,6 @@ ReturnExpression.prototype.increaseLineNumber = function () {
     }
 };
 
-ReturnExpression.prototype.getLineNumber = function () {
-    return this.lineNumber;
-};
-
 ReturnExpression.prototype.getPayloads = function () {
     return this.payloads;
 };

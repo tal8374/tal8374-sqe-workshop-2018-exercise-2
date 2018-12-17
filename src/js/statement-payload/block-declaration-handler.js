@@ -30,10 +30,6 @@ BlockDeclaration.prototype.increaseLineNumber = function () {
     }
 };
 
-BlockDeclaration.prototype.getLineNumber = function () {
-    return this.lineNumber;
-};
-
 BlockDeclaration.prototype.getPayloads = function () {
     return this.payloads;
 };

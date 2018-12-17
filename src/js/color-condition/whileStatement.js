@@ -15,16 +15,4 @@ WhileStatement.prototype.colorCode = function () {
     }
 };
 
-WhileStatement.prototype.getWrapperParams = function () {
-    if (!this.wrapper || !this.wrapper.getParams) return [];
-
-    return this.wrapper.getParams;
-};
-
-WhileStatement.prototype.getParams = function () {
-    if (!this.wrapper || !this.wrapper.getParams) return [];
-
-    return this.wrapper.getParams();
-};
-
 export {WhileStatement};

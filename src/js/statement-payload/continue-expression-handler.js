@@ -36,10 +36,6 @@ ContinueStatementExpression.prototype.increaseLineNumber = function () {
     }
 };
 
-ContinueStatementExpression.prototype.getLineNumber = function () {
-    return this.lineNumber;
-};
-
 ContinueStatementExpression.prototype.getPayloads = function () {
     return this.payloads;
 };

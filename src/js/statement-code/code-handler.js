@@ -5,8 +5,6 @@ import {AssignmentStatement} from './assignmentStatement';
 import {IfStatement} from './ifStatement';
 import {ElseIfStatement} from './elseIfStatement';
 import {ReturnStatement} from './returnStatement';
-import {BreakStatement} from './breakStatement';
-import {ContinueStatement} from './continueStatement';
 
 function CodeHandler(payloads, wrapper, numberOfTabs = 0) {
     this.payloads = payloads;
@@ -23,15 +21,11 @@ CodeHandler.prototype.handlers = {
     'IfStatement': IfStatement,
     'else if statement': ElseIfStatement,
     'ReturnStatement': ReturnStatement,
-    'BreakStatement': BreakStatement,
-    'ContinueStatement': ContinueStatement,
 };
 
 CodeHandler.prototype.createCode = function () {
     for (let i = 0; i < this.payloads.length; i++) {
         let codeType = this.payloads[i].type;
-
-        if (!this.handlers[codeType]) return;
 
         let codeHandler = new this.handlers[codeType](this.wrapper, this.payloads[i], this.numberOfTabs);
         codeHandler.createCode();
@@ -39,34 +33,19 @@ CodeHandler.prototype.createCode = function () {
 
 
         for (let i = 0; i < code.length; i++) {
-            if (this.wrapper) {
-                this.wrapper.code.push(code[i]);
-            } else {
-                this.code.push(code[i]);
-            }
+            this.code.push(code[i]);
+
+            // if (this.wrapper) {
+            //     this.wrapper.code.push(code[i]);
+            // } else {
+            //     this.code.push(code[i]);
+            // }
         }
     }
-};
-
-CodeHandler.prototype.getWrapperParams = function () {
-    if (!this.wrapper || !this.wrapper.getParams) return [];
-
-    return this.wrapper.getParams;
-};
-
-CodeHandler.prototype.getParams = function () {
-    if (!this.wrapper || !this.wrapper.getParams) return [];
-
-    return this.wrapper.getParams();
-};
-
-CodeHandler.prototype.printCode = function () {
-
 };
 
 CodeHandler.prototype.getCode = function () {
     return this.code;
 };
-
 
 export {CodeHandler};

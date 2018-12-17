@@ -73,15 +73,6 @@ IfExpression.prototype.handleElseStatement = function () {
     }
 };
 
-IfExpression.prototype.declareElseStatement = function () {
-    var payload = {
-        lineNumber: this.lineNumber,
-        type: this.type ? this.type : this.expression.type,
-    };
-
-    this.payloads.body[0].declaration = payload;
-};
-
 IfExpression.prototype.handleIfDeclaration = function () {
     this.payloads[0].type = this.type ? this.type : this.expression.type;
 
@@ -110,10 +101,6 @@ IfExpression.prototype.increaseLineNumber = function () {
     if (this.wrapper) {
         this.wrapper.increaseLineNumber();
     }
-};
-
-IfExpression.prototype.getLineNumber = function () {
-    return this.lineNumber;
 };
 
 IfExpression.prototype.getPayloads = function () {

@@ -28,12 +28,6 @@ IfStatement.prototype.handleBody = function () {
     }
 };
 
-IfStatement.prototype.getWrapperParams = function () {
-    if (!this.wrapper || !this.wrapper.getParams) return [];
-
-    return this.wrapper.getParams();
-};
-
 IfStatement.prototype.getParams = function () {
     if (!this.wrapper || !this.wrapper.getParams) return [];
 

@@ -36,10 +36,6 @@ BreakStatementExpression.prototype.increaseLineNumber = function () {
     }
 };
 
-BreakStatementExpression.prototype.getLineNumber = function () {
-    return this.lineNumber;
-};
-
 BreakStatementExpression.prototype.getPayloads = function () {
     return this.payloads;
 };

@@ -74,9 +74,7 @@ FunctionStatement.prototype.closeCode = function () {
 };
 
 FunctionStatement.prototype.getWrapperParams = function () {
-    if(!this.wrapper || !this.wrapper.getParams) return [];
-
-    return this.wrapper.getParams();
+    return [];
 };
 
 FunctionStatement.prototype.getParams = function () {

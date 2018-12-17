@@ -56,12 +56,6 @@ WhileStatement.prototype.closeCode = function () {
     this.code.push(code);
 };
 
-WhileStatement.prototype.getWrapperParams = function () {
-    if(!this.wrapper || !this.wrapper.getParams) return [];
-
-    return this.wrapper.getParams;
-};
-
 WhileStatement.prototype.getParams = function () {
     if(!this.wrapper || !this.wrapper.getParams) return [];
 

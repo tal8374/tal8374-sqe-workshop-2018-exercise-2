@@ -19,18 +19,6 @@ ReturnStatement.prototype.createCode = function () {
     this.code.push(code);
 };
 
-ReturnStatement.prototype.getWrapperParams = function () {
-    if (!this.wrapper || !this.wrapper.getParams) return [];
-
-    return this.wrapper.getParams();
-};
-
-ReturnStatement.prototype.getParams = function () {
-    if (!this.wrapper || !this.wrapper.getParams) return [];
-
-    return this.wrapper.getParams();
-};
-
 ReturnStatement.prototype.getCode = function () {
     return this.code;
 };

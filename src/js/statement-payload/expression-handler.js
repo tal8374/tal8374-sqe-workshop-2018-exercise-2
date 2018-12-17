@@ -15,15 +15,9 @@ Expression.prototype.handlers = {
     'BinaryExpression': binaryExpressionHandler,
     'Identifier': identifierTestHandler,
     'MemberExpression': memberExpressionTestHandler,
-    'UnaryExpression': unaryExpressionTestHandler,
-    'CallExpression': callExpressionTestHandler,
     'ArrayExpression': arrayExpressionTestHandler,
-    'LogicalExpression': logicalExpressionTestHandler,
-    'YieldExpression': yieldExpressionHandler,
     'ObjectExpression': objectExpressionHandler,
     'ConditionalExpression': conditionalExpressionHandler,
-    'AssignmentPattern': assignmentPatternHandler,
-    'AssignmentExpression': assignmentPatternHandler,
 };
 
 function literalTestHandler(conditionExpression) {
@@ -42,13 +36,6 @@ function binaryExpressionHandler(conditionExpression) {
     return left + operator + right;
 }
 
-function unaryExpressionTestHandler(conditionExpression) {
-    let operator = conditionExpression.operator;
-    let argument = new Expression(conditionExpression.argument).getExpression();
-
-    return operator + argument;
-}
-
 function identifierTestHandler(conditionExpression) {
     return conditionExpression.name;
 }
@@ -65,12 +52,6 @@ function memberExpressionTestHandler(conditionExpression) {
 
 }
 
-function callExpressionTestHandler(conditionExpression) {
-    let property = new Expression(conditionExpression.callee).getExpression();
-
-    return property + '()';
-}
-
 function arrayExpressionTestHandler(conditionExpression) {
     let array = '';
 
@@ -85,16 +66,6 @@ function arrayExpressionTestHandler(conditionExpression) {
     }
 
     return '[' + array + ']';
-}
-
-function logicalExpressionTestHandler(conditionExpression) {
-    return binaryExpressionHandler(conditionExpression);
-}
-
-function yieldExpressionHandler(conditionExpression) {
-    let expression = new Expression(conditionExpression.argument);
-
-    return 'yield ' + expression.getExpression();
 }
 
 function objectExpressionHandler(conditionExpression) {
@@ -120,13 +91,6 @@ function conditionalExpressionHandler(conditionExpression) {
     let consequent = new Expression(conditionExpression.consequent).getExpression();
 
     return test + ' ? ' + consequent + ' : ' + alternate;
-}
-
-function assignmentPatternHandler(conditionExpression) {
-    let left = new Expression(conditionExpression.left).getExpression();
-    let right = new Expression(conditionExpression.right).getExpression();
-
-    return left + ' = ' + right;
 }
 
 export {Expression};

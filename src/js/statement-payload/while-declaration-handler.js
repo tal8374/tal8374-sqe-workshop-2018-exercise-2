@@ -61,10 +61,6 @@ WhileDeclaration.prototype.increaseLineNumber = function () {
     }
 };
 
-WhileDeclaration.prototype.getLineNumber = function () {
-    return this.lineNumber;
-};
-
 WhileDeclaration.prototype.getPayloads = function () {
     return this.payloads;
 };
