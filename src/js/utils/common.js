@@ -1,20 +1,3 @@
-function printCode(code) {
-    let codeWrapper = document.getElementById('codeWrapper');
-
-    code.forEach(function (codeStatement) {
-        var div = document.createElement('div');
-
-        div.innerText = codeStatement.text;
-
-        if (codeStatement.style) {
-            div.style.marginLeft = codeStatement.style.marginLeft;
-            div.style.backgroundColor = codeStatement.style.backgroundColor;
-        }
-
-        codeWrapper.appendChild(div);
-    });
-}
-
 function addMarginLeft(code, numberOfTabs) {
     if (!code.style) {
         code.style = {};
@@ -24,39 +7,42 @@ function addMarginLeft(code, numberOfTabs) {
 }
 
 function addColor(code, backgroundColor) {
-    if (!code.style) {
-        code.style = {};
-    }
-
     code.style.backgroundColor = backgroundColor;
 }
 
-function replaceAll(str, search, replacement, params) {
-    if (isParam(search, params)) return str;
-
-    if (replacement.constructor === Array) {
-        replacement = '[' + replacement.toString() + ']';
-    }
-
+function replaceAll(str, search, replacement) {
     return str.split(search).join(replacement);
 }
-
 
 function updateLocalVariable(payload, localVariables, globalVariables, params) {
     let variableName = payload.name || '';
     let variableContent = payload.value || '';
 
     variableContent = doSymbolicSubstitutionTo(variableContent, variableName, localVariables, globalVariables, params);
-
+    localVariables[variableName] = getVariableContent(variableContent);
+    variableContent = getVariableContent(variableContent);
     payload.value = variableContent;
-    localVariables[variableName] = variableContent;
 
     updateParamValue(params, variableName, variableContent);
 }
 
+function getVariableContent(variableContent) {
+    var expr = new RegExp('(?<=[-+*/])|(?=[-+*/])');
+    let splittedVariableContent = variableContent.split(expr);
+    const mappedVariableContent = splittedVariableContent.map(content => {
+        try {
+            content = eval(content);
+            return JSON.stringify(content);
+        } catch (e) {
+            return content;
+        }
+    });
+
+    return mappedVariableContent.join(' ');
+}
+
 function updateParamValue(params, variableName, variableContent) {
     let paramPayload = params.filter(param => param.name === variableName);
-
     if (paramPayload.length !== 1) return;
 
     paramPayload = paramPayload[0];
@@ -70,16 +56,6 @@ function doSymbolicSubstitutionTo(variableContent, variableName, localVariables,
         localVariables, globalVariables, params);
 
     return variableContent;
-}
-
-function isParam(variableName, params) {
-    for (let i = 0; i < params.length; i++) {
-        if (params[i].name === variableName) {
-            return true;
-        }
-    }
-
-    return false;
 }
 
 function doSymbolicSubstitutionWithLocalVariableTo(variableContent, variableName, localVariables, params) {
@@ -153,10 +129,8 @@ function checkCondition(condition) {
         if (typeof condition === 'string') {
             return condition.length;
         }
-
-        return false;
     }
 }
 
 
-export {printCode, addMarginLeft, replaceAll, updateLocalVariable, getGlobalVariables, colorCondition, addColor};
+export {addMarginLeft, replaceAll, updateLocalVariable, getGlobalVariables, colorCondition, addColor};
