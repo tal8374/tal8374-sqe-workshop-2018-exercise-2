@@ -11,7 +11,7 @@ function addColor(code, backgroundColor) {
 }
 
 function replaceAll(str, search, replacement) {
-    return str.split(search).join(replacement);
+    return str.split(search).join('' + replacement);
 }
 
 function updateLocalVariable(payload, localVariables, globalVariables, params) {
@@ -37,7 +37,6 @@ function getVariableContent(variableContent) {
             return content;
         }
     });
-
     return mappedVariableContent.join(' ');
 }
 
@@ -100,7 +99,7 @@ function getGlobalVariables(wrapper, params) {
 
 function colorCondition(payload, params, condition, inputs) {
     for (let i = 0; i < params.length; i++) {
-        condition = replaceAll(condition, params[i].name, inputs[i], []);
+        condition = replaceAll(condition, params[i].name, JSON.stringify(inputs[i]), []);
     }
 
     let isEntered = checkCondition(condition);
