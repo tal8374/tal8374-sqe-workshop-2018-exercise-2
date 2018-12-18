@@ -30,11 +30,18 @@ BodyDeclaration.prototype.handlers = {
 };
 
 BodyDeclaration.prototype.init = function () {
+
+    if(!this.body) {
+        this.body = [this.body];
+    }
+
     if (!this.body.length) {
         this.body = [this.body];
     }
 
     for (let i = 0; i < this.body.length; i++) {
+        if(!this.body[i]) continue;
+
         this.handleDeclaration(this.body[i]);
     }
 
@@ -43,6 +50,8 @@ BodyDeclaration.prototype.init = function () {
 
 BodyDeclaration.prototype.handleDeclaration = function (declaration) {
     let declarationType = declaration.type;
+
+
 
     if (this.handlers[declarationType]) {
         let declarationHandler = new this.handlers[declarationType](declaration, this, this.lineNumber, this.type);

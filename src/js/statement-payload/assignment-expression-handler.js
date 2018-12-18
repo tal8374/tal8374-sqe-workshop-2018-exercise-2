@@ -43,7 +43,6 @@ AssignmentExpression.prototype.assignmentExpressionHandler = function (declarati
 AssignmentExpression.prototype.parseAssignmentExpressionHandler = function (expression) {
     let valueExpression = new ValueExpression(expression.right ? expression.right : expression);
 
-
     return {
         type: this.type ? this.type : this.expression.type,
         name: this.getName(expression),

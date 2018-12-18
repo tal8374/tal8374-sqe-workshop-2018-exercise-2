@@ -19,7 +19,12 @@ ElseExpression.prototype.init = function () {
 };
 
 ElseExpression.prototype.handleBody = function () {
-    let bodyExpression = new BodyDeclaration(this.expression.body, this, this.lineNumber + 1);
+    let body = [this.expression];
+    if (this.expression.body) {
+        body = this.expression.body;
+    }
+
+    let bodyExpression = new BodyDeclaration(body, this, this.lineNumber + 1);
     bodyExpression.init();
 
     let payloads = bodyExpression.getPayloads();
