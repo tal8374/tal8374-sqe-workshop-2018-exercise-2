@@ -27,6 +27,8 @@ CodeHandler.prototype.createCode = function () {
     for (let i = 0; i < this.payloads.length; i++) {
         let codeType = this.payloads[i].type;
 
+        if(!this.handlers[codeType]) continue;
+
         let codeHandler = new this.handlers[codeType](this.wrapper, this.payloads[i], this.numberOfTabs);
         codeHandler.createCode();
         let code = codeHandler.getCode();
@@ -34,12 +36,6 @@ CodeHandler.prototype.createCode = function () {
 
         for (let i = 0; i < code.length; i++) {
             this.code.push(code[i]);
-
-            // if (this.wrapper) {
-            //     this.wrapper.code.push(code[i]);
-            // } else {
-            //     this.code.push(code[i]);
-            // }
         }
     }
 };

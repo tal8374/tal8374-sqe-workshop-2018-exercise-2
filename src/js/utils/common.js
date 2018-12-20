@@ -32,6 +32,8 @@ function getVariableContent(variableContent) {
     let splittedVariableContent = variableContent.split(expr);
     const mappedVariableContent = splittedVariableContent.map(content => {
         try {
+            if (containsSign(content)) return content;
+
             content = eval(content);
             return JSON.stringify(content);
         } catch (e) {
@@ -39,6 +41,16 @@ function getVariableContent(variableContent) {
         }
     });
     return mappedVariableContent.join(' ');
+}
+
+function containsSign(content) {
+    let signs = ['<', '>', '===', '=='];
+
+    for (let i = 0; i < signs.length; i++) {
+        if (content.includes(signs[i])) return true;
+    }
+
+    return false;
 }
 
 function updateParamValue(params, variableName, variableContent) {
