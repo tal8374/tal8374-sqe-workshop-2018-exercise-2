@@ -53,6 +53,8 @@ ElseIfStatement.prototype.createElseStatement = function () {
 
     addMarginLeft(code, this.numberOfTabs);
 
+    addColor(code, this.payload.style.backgroundColor);
+
     this.code.push(code);
 };
 

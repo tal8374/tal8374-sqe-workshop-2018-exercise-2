@@ -9,10 +9,8 @@ function FunctionStatement(wrapper, payloads, input) {
 FunctionStatement.prototype.colorCode = function () {
     let bodyCode = this.payloads.body;
 
-    for (let i = 0; i < bodyCode.length; i++) {
-        let colorCreator = new ColorHandler([bodyCode[i]], this, this.input);
-        colorCreator.colorCode();
-    }
+    let colorCreator = new ColorHandler(bodyCode, this, this.input);
+    colorCreator.colorCode();
 };
 
 FunctionStatement.prototype.getWrapperParams = function () {

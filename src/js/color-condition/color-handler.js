@@ -3,11 +3,11 @@ import {WhileStatement} from './whileStatement';
 import {IfStatement} from './ifStatement';
 import {ElseIfStatement} from './elseIfStatement';
 
-function ColorHandler(payloads, wrapper, input) {
+function ColorHandler(payloads, wrapper, input, isMarked) {
     this.payloads = payloads;
     this.wrapper = wrapper;
     this.input = input;
-
+    this.isMarked = isMarked;
 }
 
 ColorHandler.prototype.handlers = {
@@ -23,7 +23,11 @@ ColorHandler.prototype.colorCode = function () {
 
         if (!this.handlers[codeType]) continue;
 
-        let codeHandler = new this.handlers[codeType](this.wrapper, this.payloads[i], this.input);
+        if(codeType === 'IfStatement') {
+            this.isMarked = {};
+        }
+
+        let codeHandler = new this.handlers[codeType](this.wrapper, this.payloads[i], this.input, this.isMarked);
         codeHandler.colorCode();
     }
 };

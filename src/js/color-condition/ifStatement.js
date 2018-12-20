@@ -1,10 +1,11 @@
 import {colorCondition} from '../utils/common';
 import {ColorHandler} from './color-handler';
 
-function IfStatement(wrapper, payload, input) {
+function IfStatement(wrapper, payload, input, isMarked) {
     this.wrapper = wrapper;
     this.payload = payload;
     this.input = input;
+    this.isMarked = isMarked;
 }
 
 IfStatement.prototype.colorCode = function () {
@@ -14,18 +15,17 @@ IfStatement.prototype.colorCode = function () {
 };
 
 IfStatement.prototype.colorCondition = function () {
-    let condition =  this.payload.declaration.condition;
+    let condition = this.payload.declaration.condition;
 
     colorCondition(this.payload, this.getParams(), condition, this.input);
 };
 
 IfStatement.prototype.handleBody = function () {
+    this.isMarked.isMarked = this.payload.style.backgroundColor === '#7FFF00';
     let bodyCode = this.payload.body;
 
-    for (let i = 0; i < bodyCode.length; i++) {
-        let colorCreator = new ColorHandler([bodyCode[i]], this, this.input);
-        colorCreator.colorCode();
-    }
+    let colorCreator = new ColorHandler(bodyCode, this, this.input);
+    colorCreator.colorCode();
 };
 
 IfStatement.prototype.getParams = function () {

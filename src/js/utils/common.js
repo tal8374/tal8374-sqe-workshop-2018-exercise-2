@@ -27,6 +27,7 @@ function updateLocalVariable(payload, localVariables, globalVariables, params) {
 }
 
 function getVariableContent(variableContent) {
+    variableContent = '' + variableContent;
     var expr = new RegExp('(?<=[-+*/])|(?=[-+*/])');
     let splittedVariableContent = variableContent.split(expr);
     const mappedVariableContent = splittedVariableContent.map(content => {

@@ -9,10 +9,8 @@ function WhileStatement(wrapper, payloads, input) {
 WhileStatement.prototype.colorCode = function () {
     let bodyCode = this.payloads.body;
 
-    for (let i = 0; i < bodyCode.length; i++) {
-        let colorCreator = new ColorHandler([bodyCode[i]], this, this.input);
-        colorCreator.colorCode();
-    }
+    let colorCreator = new ColorHandler(bodyCode, this, this.input);
+    colorCreator.colorCode();
 };
 
 WhileStatement.prototype.getParams = function () {
