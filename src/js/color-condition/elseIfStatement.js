@@ -21,19 +21,8 @@ ElseIfStatement.prototype.colorCode = function () {
 ElseIfStatement.prototype.handleBody = function () {
     let bodyCode = this.payload.body;
 
-    if (this.isElseIfStatement()) {
-        this.updateMarked();
-
-    }
-
     let colorCreator = new ColorHandler(bodyCode, this, this.input);
     colorCreator.colorCode();
-};
-
-ElseIfStatement.prototype.updateMarked = function () {
-    if (!this.isMarked.isMarked) {
-        this.isMarked.isMarked = this.payload.style.backgroundColor === '#7FFF00';
-    }
 };
 
 ElseIfStatement.prototype.colorCodeElseStatement = function () {
@@ -48,8 +37,11 @@ ElseIfStatement.prototype.colorCodeElseStatement = function () {
 
 ElseIfStatement.prototype.colorCodeElseIfStatement = function () {
     let condition = this.payload.declaration.condition;
-
     colorCondition(this.payload, this.getParams(), condition, this.input);
+
+    if (!this.isMarked.isMarked) {
+        this.isMarked.isMarked = this.payload.style.backgroundColor === '#7FFF00';
+    }
 };
 
 ElseIfStatement.prototype.isElseIfStatement = function () {

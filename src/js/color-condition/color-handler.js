@@ -26,7 +26,6 @@ ColorHandler.prototype.colorCode = function () {
         if(codeType === 'IfStatement') {
             this.isMarked = {};
         }
-
         let codeHandler = new this.handlers[codeType](this.wrapper, this.payloads[i], this.input, this.isMarked);
         codeHandler.colorCode();
     }

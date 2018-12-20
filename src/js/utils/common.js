@@ -11,6 +11,8 @@ function addColor(code, backgroundColor) {
 }
 
 function replaceAll(str, search, replacement) {
+    str = '' + str;
+
     return str.split(search).join('' + replacement);
 }
 
@@ -125,6 +127,10 @@ function colorCondition(payload, params, condition, inputs) {
 }
 
 function checkCondition(condition) {
+    // if(condition === true || condition === false) return condition;
+
+    condition = '' + condition;
+
     if (condition.includes('[')) {
         condition = evalBetweenParenthesis(condition);
     }

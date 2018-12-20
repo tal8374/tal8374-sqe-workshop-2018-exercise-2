@@ -16,12 +16,11 @@ IfStatement.prototype.colorCode = function () {
 
 IfStatement.prototype.colorCondition = function () {
     let condition = this.payload.declaration.condition;
-
     colorCondition(this.payload, this.getParams(), condition, this.input);
+    this.isMarked.isMarked = this.payload.style.backgroundColor === '#7FFF00';
 };
 
 IfStatement.prototype.handleBody = function () {
-    this.isMarked.isMarked = this.payload.style.backgroundColor === '#7FFF00';
     let bodyCode = this.payload.body;
 
     let colorCreator = new ColorHandler(bodyCode, this, this.input);
