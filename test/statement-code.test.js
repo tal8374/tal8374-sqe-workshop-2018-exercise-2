@@ -5,7 +5,7 @@ import {ColorHandler} from "../src/js/color-condition/color-handler";
 import {CodeHandler} from "../src/js/statement-code/code-handler";
 
 describe('The color condition', () => {
-    it('is should do complicated statement-symbolic-substitution', () => {
+    it('is should do complicated statement-code', () => {
         let codeToParse = 'let d = 2;\n' +
             '\n' +
             'function foo(x, y, z){\n' +
@@ -53,8 +53,8 @@ describe('The color condition', () => {
             '[{"text":"function foo (x, y, z) {","style":{"marginLeft":"0px"}},{"text":"while  (a<z) {","style":{"marginLeft":"20px"}},{"text":"z = (c)*(2);","style":{"marginLe' +
             'ft":"40px"}},{"text":"}","style":{"marginLeft":"20px"}},{"text":"if  (b<z) {","style":{"marginLeft":"20px","backgroundColor":"#7FFF00"}},{"text":"return x+y+z+c;","style":{"ma' +
             'rginLeft":"40px"}},{"text":"}","style":{"marginLeft":"20px"}},{"text":"else if  (b<(z)*(2)) {","style":{"marginLeft":"20px","backgroundColor":"#7FFF00"}},{"text":"return x+y+z+c;' +
-            '","style":{"marginLeft":"40px"}},{"text":"}","style":{"marginLeft":"20px"}},{"text":"else  {","style":{"marginLeft":"20px"}},{"text":"return x+y+z+c;","style":{"marginLeft":"' +
-            '40px"}},{"text":"}","style":{"marginLeft":"20px"}},{"text":"}","style":{"marginLeft":"0px"}}]'
+            '","style":{"marginLeft":"40px"}},{"text":"}","style":{"marginLeft":"20px"}},{"text":"else  {","style":{"marginLeft":"20px","backgroundColor":"#FF4500"}},{"text":"return x+y+z+c' +
+            ';","style":{"marginLeft":"40px"}},{"text":"}","style":{"marginLeft":"20px"}},{"text":"}","style":{"marginLeft":"0px"}}]'
         );
     });
 
@@ -183,13 +183,13 @@ describe('The color condition', () => {
             JSON.stringify(code),
             '[{"text":"if  (true) {","style":{"marginLeft":"0px","backgroundColor":"#7FFF00"}},{"text":"if  (true) {","style":{"marginLeft":"20px","backgroundColor":"#7FFF00"}' +
             '},{"text":"}","style":{"marginLeft":"20px"}},{"text":"else if  (true) {","style":{"marginLeft":"20px","backgroundColor":"#7FFF00"}},{"text":"}","style":{"marginLeft":"20px"}},' +
-            '{"text":"else  {","style":{"marginLeft":"20px"}},{"text":"}","style":{"marginLeft":"20px"}},{"text":"}","style":{"marginLeft":"0px"}},{"text":"else if  (true) {","style":{"' +
-            'marginLeft":"0px","backgroundColor":"#7FFF00"}},{"text":"if  (true) {","style":{"marginLeft":"20px","backgroundColor":"#7FFF00"}},{"text":"}","style":{"marginLeft":"20px"}},{"te' +
-            'xt":"else if  (true) {","style":{"marginLeft":"20px","backgroundColor":"#7FFF00"}},{"text":"}","style":{"marginLeft":"20px"}},{"text":"else  {","style":{"marginLeft":"20px"}},{' +
-            '"text":"}","style":{"marginLeft":"20px"}},{"text":"}","style":{"marginLeft":"0px"}},{"text":"else  {","style":{"marginLeft":"0px"}},{"text":"if  (true) {","style":{"marginL' +
-            'eft":"20px","backgroundColor":"#7FFF00"}},{"text":"}","style":{"marginLeft":"20px"}},{"text":"else if  (true) {","style":{"marginLeft":"20px","backgroundColor":"#7FFF00"}},{"tex' +
-            't":"}","style":{"marginLeft":"20px"}},{"text":"else  {","style":{"marginLeft":"20px"}},{"text":"}","style":{"marginLeft":"20px"}},{"text":"}","style":{"marginLeft":"0px"}' +
-            '}]'
+            '{"text":"else  {","style":{"marginLeft":"20px","backgroundColor":"#FF4500"}},{"text":"}","style":{"marginLeft":"20px"}},{"text":"}","style":{"marginLeft":"0px"}},{"text":"e' +
+            'lse if  (true) {","style":{"marginLeft":"0px","backgroundColor":"#7FFF00"}},{"text":"if  (true) {","style":{"marginLeft":"20px","backgroundColor":"#7FFF00"}},{"text":"}","style":' +
+            '{"marginLeft":"20px"}},{"text":"else if  (true) {","style":{"marginLeft":"20px","backgroundColor":"#7FFF00"}},{"text":"}","style":{"marginLeft":"20px"}},{"text":"else  {","styl' +
+            'e":{"marginLeft":"20px","backgroundColor":"#FF4500"}},{"text":"}","style":{"marginLeft":"20px"}},{"text":"}","style":{"marginLeft":"0px"}},{"text":"else  {","style":{"margin' +
+            'Left":"0px","backgroundColor":"#FF4500"}},{"text":"if  (true) {","style":{"marginLeft":"20px","backgroundColor":"#7FFF00"}},{"text":"}","style":{"marginLeft":"20px"}},{"text":' +
+            '"else if  (true) {","style":{"marginLeft":"20px","backgroundColor":"#7FFF00"}},{"text":"}","style":{"marginLeft":"20px"}},{"text":"else  {","style":{"marginLeft":"20px","backgro' +
+            'undColor":"#FF4500"}},{"text":"}","style":{"marginLeft":"20px"}},{"text":"}","style":{"marginLeft":"0px"}}]'
         );
     });
 
@@ -226,8 +226,8 @@ describe('The color condition', () => {
         assert.equal(
             JSON.stringify(code),
             '[{"text":"if  (true) {","style":{"marginLeft":"0px","backgroundColor":"#7FFF00"}},{"text":"}","style":{"marginLeft":"0px"}},{"text":"else if  (b<(z)*(2)) {","sty' +
-            'le":{"marginLeft":"0px","backgroundColor":"#7FFF00"}},{"text":"}","style":{"marginLeft":"0px"}},{"text":"else  {","style":{"marginLeft":"0px"}},{"text":"}","style":{"marginL' +
-            'eft":"0px"}}]'
+            'le":{"marginLeft":"0px","backgroundColor":"#7FFF00"}},{"text":"}","style":{"marginLeft":"0px"}},{"text":"else  {","style":{"marginLeft":"0px","backgroundColor":"#FF4500"}},{"t' +
+            'ext":"}","style":{"marginLeft":"0px"}}]'
         );
     });
 
@@ -261,8 +261,8 @@ describe('The color condition', () => {
         assert.equal(
             JSON.stringify(code),
             '[{"text":"if  (b<z) {","style":{"marginLeft":"0px","backgroundColor":"#7FFF00"}},{"text":"}","style":{"marginLeft":"0px"}},{"text":"else if  (b<(z)*(2)) {","styl' +
-            'e":{"marginLeft":"0px","backgroundColor":"#7FFF00"}},{"text":"}","style":{"marginLeft":"0px"}},{"text":"else  {","style":{"marginLeft":"0px"}},{"text":"}","style":{"marginLe' +
-            'ft":"0px"}}]'
+            'e":{"marginLeft":"0px","backgroundColor":"#7FFF00"}},{"text":"}","style":{"marginLeft":"0px"}},{"text":"else  {","style":{"marginLeft":"0px","backgroundColor":"#FF4500"}},{"te' +
+            'xt":"}","style":{"marginLeft":"0px"}}]'
         );
     });
 

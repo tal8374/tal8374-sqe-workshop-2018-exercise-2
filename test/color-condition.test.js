@@ -4,7 +4,7 @@ import {facadeDeclaration} from "../src/js/statement-payload/facade-declaration-
 import {ColorHandler} from "../src/js/color-condition/color-handler";
 
 describe('The color condition', () => {
-    it('is should do complicated statement-symbolic-substitution', () => {
+    it('is should color condition inside function and inside while statement', () => {
         let codeToParse = 'let d = 2;\n' +
             '\n' +
             'function foo(x, y, z){\n' +
@@ -54,7 +54,7 @@ describe('The color condition', () => {
             'pe":"ReturnStatement","value":"x+y+z+c","lineNumber":11}],"style":{"backgroundColor":"#7FFF00"}},{"type":"else if statement","declaration":{"lineNumber":12,"type":"else if statement"' +
             ',"name":null,"value":null,"condition":"b<(z)*(2)"},"body":[{"type":"AssignmentExpression","name":"c","value":"c+x+5","lineNumber":13},{"type":"ReturnStatement","value":"x+y+z+c"' +
             ',"lineNumber":14}],"style":{"backgroundColor":"#7FFF00"}},{"type":"else if statement","body":[{"type":"AssignmentExpression","name":"c","value":"c+z+5","lineNumber":16},{"type":"' +
-            'ReturnStatement","value":"x+y+z+c","lineNumber":17}]}]},{"type":"AssignmentExpression","name":"d","value":"333","lineNumber":18}]'
+            'ReturnStatement","value":"x+y+z+c","lineNumber":17}],"style":{"backgroundColor":"#FF4500"}}]},{"type":"AssignmentExpression","name":"d","value":"333","lineNumber":18}]'
         );
     });
 
@@ -131,7 +131,7 @@ describe('The color condition', () => {
             '":"c+5","lineNumber":6},{"type":"ReturnStatement","value":"x+y+z+c","lineNumber":7}],"style":{"backgroundColor":"#7FFF00"}},{"type":"else if statement","declaration":{"lineNumber":8' +
             ',"type":"else if statement","name":null,"value":null,"condition":"b<(z)*(2)"},"body":[{"type":"AssignmentExpression","name":"c","value":"c+x+5","lineNumber":9},{"type":"ReturnSta' +
             'tement","value":"x+y+z+c","lineNumber":10}],"style":{"backgroundColor":"#7FFF00"}},{"type":"else if statement","body":[{"type":"AssignmentExpression","name":"c","value":"c+z+5",' +
-            '"lineNumber":12},{"type":"ReturnStatement","value":"x+y+z+c","lineNumber":13}]}]}]'
+            '"lineNumber":12},{"type":"ReturnStatement","value":"x+y+z+c","lineNumber":13}],"style":{"backgroundColor":"#FF4500"}}]}]'
         );
     });
 
@@ -187,10 +187,11 @@ describe('The color condition', () => {
             ',"name":"c","value":"c+5","lineNumber":8},{"type":"ReturnStatement","value":"x+y+z+c","lineNumber":9}],"style":{"backgroundColor":"#7FFF00"}},{"type":"else if statement","declara' +
             'tion":{"lineNumber":10,"type":"else if statement","name":null,"value":null,"condition":"b<(z)*(2)"},"body":[{"type":"AssignmentExpression","name":"c","value":"c+x+5","lineNumber"' +
             ':11},{"type":"ReturnStatement","value":"x+y+z+c","lineNumber":12}],"style":{"backgroundColor":"#7FFF00"}},{"type":"else if statement","body":[{"type":"AssignmentExpression","name":' +
-            '"c","value":"c+z+5","lineNumber":14},{"type":"ReturnStatement","value":"x+y+z+c","lineNumber":15}]},{"type":"ReturnStatement","value":"x+y+z+c","lineNumber":16}],"style":{"backgro' +
-            'undColor":"#7FFF00"}},{"type":"else if statement","declaration":{"lineNumber":17,"type":"else if statement","name":null,"value":null,"condition":"b<(z)*(2)"},"body":[{"type":"Assign' +
-            'mentExpression","name":"c","value":"c+x+5","lineNumber":18},{"type":"ReturnStatement","value":"x+y+z+c","lineNumber":19}],"style":{"backgroundColor":"#7FFF00"}},{"type":"else if s' +
-            'tatement","body":[{"type":"AssignmentExpression","name":"c","value":"c+z+5","lineNumber":21},{"type":"ReturnStatement","value":"x+y+z+c","lineNumber":22}]}]}]'
+            '"c","value":"c+z+5","lineNumber":14},{"type":"ReturnStatement","value":"x+y+z+c","lineNumber":15}],"style":{"backgroundColor":"#FF4500"}},{"type":"ReturnStatement","value":"x+y+z+' +
+            'c","lineNumber":16}],"style":{"backgroundColor":"#7FFF00"}},{"type":"else if statement","declaration":{"lineNumber":17,"type":"else if statement","name":null,"value":null,"condition"' +
+            ':"b<(z)*(2)"},"body":[{"type":"AssignmentExpression","name":"c","value":"c+x+5","lineNumber":18},{"type":"ReturnStatement","value":"x+y+z+c","lineNumber":19}],"style":{"backgroun' +
+            'dColor":"#7FFF00"}},{"type":"else if statement","body":[{"type":"AssignmentExpression","name":"c","value":"c+z+5","lineNumber":21},{"type":"ReturnStatement","value":"x+y+z+c","l' +
+            'ineNumber":22}],"style":{"backgroundColor":"#FF4500"}}]}]'
         );
     });
 
@@ -235,9 +236,7 @@ describe('The color condition', () => {
             '":"x+y+z+c","lineNumber":8}],"style":{"backgroundColor":"#7FFF00"}},{"type":"else if statement","declaration":{"lineNumber":9,"type":"else if statement","name":null,"value":null,"co' +
             'ndition":"b<(z)*(2)"},"body":[{"type":"AssignmentExpression","name":"c","value":"c+x+5","lineNumber":10},{"type":"ReturnStatement","value":"x+y+z+c","lineNumber":11}],"style":{"' +
             'backgroundColor":"#7FFF00"}},{"type":"else if statement","body":[{"type":"AssignmentExpression","name":"c","value":"c+z+5","lineNumber":13},{"type":"ReturnStatement","value":"x+y+' +
-            'z+c","lineNumber":14}]}]}],"style":{"backgroundColor":"#7FFF00"}}]'
+            'z+c","lineNumber":14}],"style":{"backgroundColor":"#FF4500"}}]}],"style":{"backgroundColor":"#7FFF00"}}]'
         );
     });
-
-
 });
