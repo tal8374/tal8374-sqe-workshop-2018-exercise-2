@@ -133,14 +133,14 @@ function evalBetweenParenthesis(condition) {
         let conditionPayload = getConditionPayload(condition);
 
         if (conditionPayload.between.includes(',')) {
-            newCondition += before + '[' + conditionPayload.between + ']';
-            condition = after;
+            newCondition += conditionPayload.before + '[' + conditionPayload.between + ']';
+            condition = conditionPayload.after;
             continue;
         }
-        newCondition += before + '[' + Math.floor(eval(conditionPayload.between)) + ']';
-        condition = after;
+        newCondition += conditionPayload.before + '[' + Math.floor(eval(conditionPayload.between)) + ']';
+        condition = conditionPayload.after;
         if (!conditionPayload.after.includes('[')) {
-            newCondition += after;
+            newCondition += conditionPayload.after;
             break;
         }
     }
