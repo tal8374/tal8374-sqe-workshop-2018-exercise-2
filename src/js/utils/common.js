@@ -113,6 +113,10 @@ function colorCondition(payload, params, condition, inputs) {
 }
 
 function checkCondition(condition) {
+    if (condition.includes('[')) {
+        condition = evalBetweenParenthesis(condition);
+    }
+
     try {
         return eval(condition);
 
@@ -121,6 +125,38 @@ function checkCondition(condition) {
             return condition.length;
         }
     }
+}
+
+function evalBetweenParenthesis(condition) {
+    let newCondition = '';
+    while (condition !== '') {
+        let conditionPayload = getConditionPayload(condition);
+
+        if (conditionPayload.between.includes(',')) {
+            newCondition += before + '[' + conditionPayload.between + ']';
+            condition = after;
+            continue;
+        }
+        newCondition += before + '[' + Math.floor(eval(conditionPayload.between)) + ']';
+        condition = after;
+        if (!conditionPayload.after.includes('[')) {
+            newCondition += after;
+            break;
+        }
+    }
+    return newCondition;
+}
+
+
+function getConditionPayload(condition) {
+    let indexOpening = condition.indexOf('[');
+    let indexClosing = condition.indexOf(']');
+
+    let before = condition.substring(0, indexOpening);
+    let between = condition.substring(indexOpening + 1, indexClosing);
+    let after = condition.substring(indexClosing + 1, condition.length);
+
+    return {before: before, between: between, after: after};
 }
 
 
